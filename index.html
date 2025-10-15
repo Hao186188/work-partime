@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./style/styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <title>Tuyển dụng của Lớp Quản Trị Mạng 3 Khóa 14 Trường Cao Đẳng Nghề Kiên Giang</title>
+    <style>
+      /* Additional styles for dropdown */
+      .dropdown {
+        position: relative;
+        display: inline-block;
+      }
+
+      .dropdown-toggle {
+        background: none;
+        border: none;
+        color: inherit;
+        font-size: inherit;
+        cursor: pointer;
+        padding: 8px 16px;
+        text-decoration: none;
+        display: inline-block;
+      }
+
+      .dropdown-toggle:hover {
+        color: #007bff;
+      }
+
+      .dropdown-menu {
+        display: none;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        background: white;
+        min-width: 180px;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        border-radius: 8px;
+        z-index: 1000;
+        padding: 8px 0;
+      }
+
+      .dropdown-menu.show {
+        display: block;
+      }
+
+      .dropdown-item {
+        display: flex;
+        align-items: center;
+        padding: 10px 16px;
+        text-decoration: none;
+        color: #333;
+        transition: background-color 0.2s;
+      }
+
+      .dropdown-item:hover {
+        background-color: #f8f9fa;
+      }
+
+      .dropdown-item img {
+        width: 20px;
+        height: 20px;
+        margin-right: 10px;
+      }
+
+      .zalo-icon, .facebook-icon {
+        font-weight: bold;
+        margin-right: 8px;
+      }
+
+      .zalo-icon {
+        color: #0068ff;
+      }
+
+      .facebook-icon {
+        color: #1877f2;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- HEADER -->
+    <header class="header">
+      <div class="container">
+        <div class="logo">Nhật Hào</div>
+        <nav class="nav">
+          <a href="index.html">Trang chủ</a>
+          <a href="work.html">Việc làm</a>
+          <a href="account.html">Đăng ký/Đăng nhập</a>
+          <div class="dropdown">
+            <a href="#" class="dropdown-toggle">Liên hệ</a>
+            <div class="dropdown-menu" id="contactDropdown">
+              <a href="https://zalo.me/0788984741" class="dropdown-item" target="_blank">
+                <span class="zalo-icon">Z</span>
+                Zalo: 0788984741
+              </a>
+              <a href="https://facebook.com/share/17PfiN1Xrk/" class="dropdown-item" target="_blank">
+                <span class="facebook-icon">f</span>
+                Facebook:Như Ý
+              </a>
+            </div>
+          </div>
+        </nav>
+      </div>
+    </header>
+
+    <!-- HERO / SEARCH -->
+    <section class="hero">
+      <div class="container">
+        <h1>Tìm việc làm Full-time & Part-time</h1>
+        <form class="search-form">
+          <input type="text" placeholder="Nhập vị trí, công ty, kỹ năng...">
+          <select>
+            <option value="">Chọn khu vực</option>
+            <option value="hn">Hà Nội</option>
+            <option value="hcm">TP HCM</option>
+            <option value="dn">Đà Nẵng</option>
+          </select>
+          <button type="submit">Tìm việc</button>
+        </form>
+      </div>
+    </section>
+
+    <!-- JOB LIST -->
+    <section class="job-list">
+      <div class="container">
+        <h2>Việc làm mới nhất</h2>
+        <div class="jobs">
+          <div class="job-card">
+            <h3>Frontend Developer</h3>
+            <p class="company">Công ty ABC</p>
+            <p class="location">Hà Nội</p>
+            <p class="type">Full-time</p>
+          </div>
+          <div class="job-card">
+            <h3>Backend Developer</h3>
+            <p class="company">Công ty XYZ</p>
+            <p class="location">TP HCM</p>
+            <p class="type">Part-time</p>
+          </div>
+          <div class="job-card">
+            <h3>Graphic Designer</h3>
+            <p class="company">Công ty DEF</p>
+            <p class="location">Đà Nẵng</p>
+            <p class="type">Full-time</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+      <div class="container">
+        <p>&copy; Nhật Hào 2025.</p>
+        <div class="socials">
+          <a href="https://facebook.com/share/17PfiN1Xrk/" target="_blank">Facebook</a>
+          <a href="https://zalo.me/0788984741" target="_blank">Zalo</a>
+          <a href="mailto:vothinhuyqtm3k14@gmail.com">Email</a>
+        </div>
+      </div>
+    </footer>
+
+    <script>
+      // Dropdown functionality
+      document.addEventListener('DOMContentLoaded', function() {
+        const dropdownToggle = document.querySelector('.dropdown-toggle');
+        const dropdownMenu = document.getElementById('contactDropdown');
+
+        dropdownToggle.addEventListener('click', function(e) {
+          e.preventDefault();
+          dropdownMenu.classList.toggle('show');
+        });
+
+        // Close dropdown when clicking outside
+        document.addEventListener('click', function(e) {
+          if (!e.target.closest('.dropdown')) {
+            dropdownMenu.classList.remove('show');
+          }
+        });
+
+        // Close dropdown when clicking on a dropdown item
+        const dropdownItems = document.querySelectorAll('.dropdown-item');
+        dropdownItems.forEach(item => {
+          item.addEventListener('click', function() {
+            dropdownMenu.classList.remove('show');
+          });
+        });
+      });
+
+      // Optional: Add keyboard navigation
+      document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape') {
+          document.getElementById('contactDropdown').classList.remove('show');
+        }
+      });
+    </script>
+  </body>
+</html>
