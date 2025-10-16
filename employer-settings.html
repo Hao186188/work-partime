@@ -1,0 +1,725 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cài đặt - Nhà tuyển dụng</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Inter', sans-serif;
+    }
+
+    :root {
+      --primary: #2563eb;
+      --danger: #dc2626;
+      --gray-50: #f9fafb;
+      --gray-100: #f3f4f6;
+      --gray-600: #4b5563;
+      --gray-900: #111827;
+    }
+
+    body {
+      background: var(--gray-50);
+      min-height: 100vh;
+    }
+
+    .dashboard-header {
+      background: white;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+      padding: 1rem 2rem;
+    }
+
+    .header-content {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .logo {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--primary);
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .user-menu {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 1.5rem;
+    }
+
+    .nav-links a {
+      color: var(--gray-600);
+      text-decoration: none;
+      font-weight: 500;
+      padding: 0.5rem 1rem;
+      border-radius: 6px;
+      transition: all 0.3s ease;
+    }
+
+    .nav-links a:hover, .nav-links a.active {
+      background: var(--primary);
+      color: white;
+    }
+
+    .dashboard-container {
+      display: flex;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 2rem;
+      gap: 2rem;
+    }
+
+    .sidebar {
+      width: 250px;
+      background: white;
+      border-radius: 12px;
+      padding: 1.5rem;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+      height: fit-content;
+    }
+
+    .nav-section {
+      margin-bottom: 2rem;
+    }
+
+    .nav-title {
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--gray-600);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 1rem;
+    }
+
+    .nav-links-vertical {
+      list-style: none;
+    }
+
+    .nav-links-vertical li {
+      margin-bottom: 0.5rem;
+    }
+
+    .nav-links-vertical a {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 0.75rem 1rem;
+      color: var(--gray-600);
+      text-decoration: none;
+      border-radius: 8px;
+      transition: all 0.3s ease;
+      font-weight: 500;
+    }
+
+    .nav-links-vertical a:hover, .nav-links-vertical a.active {
+      background: var(--primary);
+      color: white;
+    }
+
+    .main-content {
+      flex: 1;
+    }
+
+    .page-header {
+      margin-bottom: 2rem;
+    }
+
+    .page-title {
+      font-size: 1.5rem;
+      font-weight: 600;
+      color: var(--gray-900);
+      margin-bottom: 0.5rem;
+    }
+
+    .page-subtitle {
+      color: var(--gray-600);
+    }
+
+    .settings-tabs {
+      display: flex;
+      border-bottom: 1px solid var(--gray-200);
+      margin-bottom: 2rem;
+      flex-wrap: wrap;
+    }
+
+    .tab {
+      padding: 1rem 1.5rem;
+      background: none;
+      border: none;
+      cursor: pointer;
+      font-weight: 500;
+      color: var(--gray-600);
+      border-bottom: 2px solid transparent;
+      transition: all 0.3s ease;
+    }
+
+    .tab.active {
+      color: var(--primary);
+      border-bottom-color: var(--primary);
+    }
+
+    .tab-content {
+      display: none;
+    }
+
+    .tab-content.active {
+      display: block;
+    }
+
+    .settings-card {
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+      padding: 2rem;
+      margin-bottom: 2rem;
+    }
+
+    .card-title {
+      font-size: 1.2rem;
+      font-weight: 600;
+      color: var(--gray-900);
+      margin-bottom: 1.5rem;
+    }
+
+    .form-group {
+      margin-bottom: 1.5rem;
+    }
+
+    .form-label {
+      display: block;
+      margin-bottom: 0.5rem;
+      color: var(--gray-900);
+      font-weight: 500;
+    }
+
+    .form-input, .form-select {
+      width: 100%;
+      padding: 0.75rem 1rem;
+      border: 2px solid var(--gray-200);
+      border-radius: 8px;
+      font-size: 1rem;
+      transition: all 0.3s ease;
+      background: var(--gray-50);
+    }
+
+    .form-input:focus, .form-select:focus {
+      outline: none;
+      border-color: var(--primary);
+      background: white;
+      box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+    }
+
+    .btn {
+      padding: 0.75rem 1.5rem;
+      border: none;
+      border-radius: 8px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .btn-primary {
+      background: var(--primary);
+      color: white;
+    }
+
+    .btn-primary:hover {
+      background: #1d4ed8;
+    }
+
+    .btn-danger {
+      background: var(--danger);
+      color: white;
+    }
+
+    .btn-danger:hover {
+      background: #b91c1c;
+    }
+
+    .btn-outline {
+      background: transparent;
+      border: 2px solid var(--gray-300);
+      color: var(--gray-600);
+    }
+
+    .checkbox-group {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      margin-bottom: 1rem;
+    }
+
+    .checkbox-group input[type="checkbox"] {
+      accent-color: var(--primary);
+    }
+
+    .message {
+      padding: 1rem;
+      border-radius: 8px;
+      margin-bottom: 1.5rem;
+      font-weight: 500;
+    }
+
+    .message.success {
+      background: #dcfce7;
+      color: #166534;
+      border: 1px solid #bbf7d0;
+    }
+
+    .message.error {
+      background: #fef2f2;
+      color: #dc2626;
+      border: 1px solid #fecaca;
+    }
+
+    .danger-zone {
+      border: 2px solid var(--danger);
+      border-radius: 12px;
+      padding: 2rem;
+      background: #fef2f2;
+    }
+
+    .danger-title {
+      color: var(--danger);
+      font-weight: 600;
+      margin-bottom: 1rem;
+    }
+
+    .danger-description {
+      color: var(--gray-600);
+      margin-bottom: 1.5rem;
+    }
+
+    @media (max-width: 768px) {
+      .dashboard-container {
+        flex-direction: column;
+        padding: 1rem;
+      }
+
+      .sidebar {
+        width: 100%;
+      }
+
+      .settings-tabs {
+        flex-direction: column;
+      }
+
+      .tab {
+        border-bottom: none;
+        border-left: 2px solid transparent;
+      }
+
+      .tab.active {
+        border-left-color: var(--primary);
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Header -->
+  <header class="dashboard-header">
+    <div class="header-content">
+      <a href="index.html" class="logo">
+        <span>💼</span>
+        Nhật Hào
+      </a>
+      <div class="user-menu">
+        <nav class="nav-links">
+          <a href="employer-dashboard.html">Dashboard</a>
+          <a href="manage-jobs.html">Quản lý tin</a>
+          <a href="candidates.html">Ứng viên</a>
+          <a href="employer-settings.html" class="active">Cài đặt</a>
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <div class="dashboard-container">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <nav class="nav-section">
+        <div class="nav-title">Cài đặt</div>
+        <ul class="nav-links-vertical">
+          <li><a href="#account" class="active">👤 Tài khoản</a></li>
+          <li><a href="#notifications">🔔 Thông báo</a></li>
+          <li><a href="#privacy">🛡️ Bảo mật</a></li>
+          <li><a href="#preferences">⚙️ Tùy chọn</a></li>
+        </ul>
+      </nav>
+
+      <nav class="nav-section">
+        <div class="nav-title">Tài khoản</div>
+        <ul class="nav-links-vertical">
+          <li><a href="employer-profile.html">🏢 Hồ sơ công ty</a></li>
+          <li><a href="#subscription">💳 Gói dịch vụ</a></li>
+          <li><a href="#billing">🧾 Hóa đơn</a></li>
+        </ul>
+      </nav>
+    </aside>
+
+    <!-- Main Content Area -->
+    <main class="main-content">
+      <div class="page-header">
+        <h1 class="page-title">Cài đặt</h1>
+        <p class="page-subtitle">Quản lý cài đặt tài khoản và tùy chọn hệ thống</p>
+      </div>
+
+      <div id="message" class="message" style="display: none;"></div>
+
+      <!-- Tabs -->
+      <div class="settings-tabs">
+        <button class="tab active" onclick="showTab('account')">Tài khoản</button>
+        <button class="tab" onclick="showTab('notifications')">Thông báo</button>
+        <button class="tab" onclick="showTab('security')">Bảo mật</button>
+        <button class="tab" onclick="showTab('preferences')">Tùy chọn</button>
+      </div>
+
+      <!-- Account Tab -->
+      <div id="account-tab" class="tab-content active">
+        <div class="settings-card">
+          <h3 class="card-title">Thông tin tài khoản</h3>
+          <form id="accountForm">
+            <div class="form-group">
+              <label class="form-label" for="currentEmail">Email hiện tại</label>
+              <input type="email" id="currentEmail" class="form-input" readonly>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="newEmail">Email mới</label>
+              <input type="email" id="newEmail" class="form-input" placeholder="Nhập email mới">
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="confirmEmail">Xác nhận email mới</label>
+              <input type="email" id="confirmEmail" class="form-input" placeholder="Nhập lại email mới">
+            </div>
+
+            <button type="submit" class="btn btn-primary">Cập nhật email</button>
+          </form>
+        </div>
+
+        <div class="settings-card">
+          <h3 class="card-title">Thông tin liên hệ</h3>
+          <form id="contactForm">
+            <div class="form-group">
+              <label class="form-label" for="contactName">Tên người liên hệ</label>
+              <input type="text" id="contactName" class="form-input">
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="contactPhone">Số điện thoại</label>
+              <input type="tel" id="contactPhone" class="form-input">
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="contactPosition">Chức vụ</label>
+              <input type="text" id="contactPosition" class="form-input">
+            </div>
+
+            <button type="submit" class="btn btn-primary">Cập nhật thông tin</button>
+          </form>
+        </div>
+      </div>
+
+      <!-- Notifications Tab -->
+      <div id="notifications-tab" class="tab-content">
+        <div class="settings-card">
+          <h3 class="card-title">Cài đặt thông báo</h3>
+          <form id="notificationsForm">
+            <div class="checkbox-group">
+              <input type="checkbox" id="notifyNewApplications" checked>
+              <label for="notifyNewApplications">Thông báo khi có ứng viên mới ứng tuyển</label>
+            </div>
+
+            <div class="checkbox-group">
+              <input type="checkbox" id="notifyApplicationUpdates" checked>
+              <label for="notifyApplicationUpdates">Thông báo cập nhật trạng thái ứng tuyển</label>
+            </div>
+
+            <div class="checkbox-group">
+              <input type="checkbox" id="notifyJobExpiry" checked>
+              <label for="notifyJobExpiry">Thông báo khi tin tuyển dụng sắp hết hạn</label>
+            </div>
+
+            <div class="checkbox-group">
+              <input type="checkbox" id="notifyNewsletter" checked>
+              <label for="notifyNewsletter">Nhận bản tin và cập nhật từ hệ thống</label>
+            </div>
+
+            <div class="checkbox-group">
+              <input type="checkbox" id="notifyPromotions">
+              <label for="notifyPromotions">Nhận thông tin khuyến mãi và ưu đãi</label>
+            </div>
+
+            <button type="submit" class="btn btn-primary">Lưu cài đặt</button>
+          </form>
+        </div>
+      </div>
+
+      <!-- Security Tab -->
+      <div id="security-tab" class="tab-content">
+        <div class="settings-card">
+          <h3 class="card-title">Đổi mật khẩu</h3>
+          <form id="passwordForm">
+            <div class="form-group">
+              <label class="form-label" for="currentPassword">Mật khẩu hiện tại</label>
+              <input type="password" id="currentPassword" class="form-input" required>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="newPassword">Mật khẩu mới</label>
+              <input type="password" id="newPassword" class="form-input" required>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="confirmPassword">Xác nhận mật khẩu mới</label>
+              <input type="password" id="confirmPassword" class="form-input" required>
+            </div>
+
+            <button type="submit" class="btn btn-primary">Đổi mật khẩu</button>
+          </form>
+        </div>
+
+        <div class="settings-card">
+          <h3 class="card-title">Bảo mật tài khoản</h3>
+          <div class="checkbox-group">
+            <input type="checkbox" id="twoFactorAuth">
+            <label for="twoFactorAuth">Bật xác thực 2 yếu tố (2FA)</label>
+          </div>
+          <div class="checkbox-group">
+            <input type="checkbox" id="loginAlerts" checked>
+            <label for="loginAlerts">Cảnh báo đăng nhập từ thiết bị mới</label>
+          </div>
+          <button class="btn btn-primary" style="margin-top: 1rem;">Cập nhật bảo mật</button>
+        </div>
+      </div>
+
+      <!-- Preferences Tab -->
+      <div id="preferences-tab" class="tab-content">
+        <div class="settings-card">
+          <h3 class="card-title">Tùy chọn hiển thị</h3>
+          <form id="preferencesForm">
+            <div class="form-group">
+              <label class="form-label" for="language">Ngôn ngữ</label>
+              <select id="language" class="form-select">
+                <option value="vi">Tiếng Việt</option>
+                <option value="en">English</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="timezone">Múi giờ</label>
+              <select id="timezone" class="form-select">
+                <option value="+7">GMT+7 (Việt Nam)</option>
+                <option value="+0">GMT+0 (London)</option>
+                <option value="-5">GMT-5 (New York)</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="dateFormat">Định dạng ngày tháng</label>
+              <select id="dateFormat" class="form-select">
+                <option value="dd/mm/yyyy">DD/MM/YYYY</option>
+                <option value="mm/dd/yyyy">MM/DD/YYYY</option>
+                <option value="yyyy-mm-dd">YYYY-MM-DD</option>
+              </select>
+            </div>
+
+            <button type="submit" class="btn btn-primary">Lưu tùy chọn</button>
+          </form>
+        </div>
+
+        <!-- Danger Zone -->
+        <div class="danger-zone">
+          <h3 class="danger-title">⚠️ Vùng nguy hiểm</h3>
+          <p class="danger-description">
+            Các hành động trong khu vực này không thể hoàn tác. Vui lòng thận trọng.
+          </p>
+          
+          <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
+            <button class="btn btn-outline" onclick="exportData()">📥 Xuất dữ liệu</button>
+            <button class="btn btn-outline" onclick="clearCache()">🧹 Xóa cache</button>
+            <button class="btn btn-danger" onclick="deleteAccount()">🗑️ Xóa tài khoản</button>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <script src="./api.js"></script>
+  <script>
+    let currentEmployer = null;
+
+    // Kiểm tra đăng nhập
+    async function checkAuth() {
+      const loggedEmployer = localStorage.getItem('loggedEmployer') || sessionStorage.getItem('loggedEmployer');
+      if (!loggedEmployer) {
+        window.location.href = 'employer-login.html';
+        return null;
+      }
+      return JSON.parse(loggedEmployer);
+    }
+
+    // Hiển thị thông báo
+    function showMessage(message, type = 'info') {
+      const messageEl = document.getElementById('message');
+      messageEl.textContent = message;
+      messageEl.className = `message ${type}`;
+      messageEl.style.display = 'block';
+      
+      setTimeout(() => {
+        messageEl.style.display = 'none';
+      }, 5000);
+    }
+
+    // Tab navigation
+    function showTab(tabName) {
+      // Hide all tabs
+      document.querySelectorAll('.tab-content').forEach(tab => {
+        tab.classList.remove('active');
+      });
+      document.querySelectorAll('.tab').forEach(tab => {
+        tab.classList.remove('active');
+      });
+
+      // Show selected tab
+      document.getElementById(tabName + '-tab').classList.add('active');
+      event.target.classList.add('active');
+    }
+
+    // Load employer data
+    async function loadEmployerData() {
+      currentEmployer = await checkAuth();
+      if (!currentEmployer) return;
+
+      await dataAPI.init();
+      
+      // Tìm employer mới nhất từ database
+      const employers = await dataAPI.getEmployers();
+      const employer = employers.find(emp => emp.id === currentEmployer.id) || currentEmployer;
+
+      // Điền dữ liệu vào form
+      document.getElementById('currentEmail').value = employer.email || '';
+      document.getElementById('contactName').value = employer.contactPerson || '';
+      document.getElementById('contactPhone').value = employer.phone || '';
+      document.getElementById('contactPosition').value = employer.position || '';
+    }
+
+    // Form submissions
+    document.getElementById('accountForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      
+      const newEmail = document.getElementById('newEmail').value;
+      const confirmEmail = document.getElementById('confirmEmail').value;
+
+      if (newEmail !== confirmEmail) {
+        showMessage('Email xác nhận không khớp', 'error');
+        return;
+      }
+
+      // Update email logic would go here
+      showMessage('Yêu cầu đổi email đã được gửi. Vui lòng kiểm tra hộp thư của bạn.', 'success');
+    });
+
+    document.getElementById('contactForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      
+      const contactData = {
+        contactPerson: document.getElementById('contactName').value,
+        phone: document.getElementById('contactPhone').value,
+        position: document.getElementById('contactPosition').value
+      };
+
+      // Update contact info
+      await updateEmployerInfo(contactData);
+    });
+
+    document.getElementById('passwordForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      
+      const currentPassword = document.getElementById('currentPassword').value;
+      const newPassword = document.getElementById('newPassword').value;
+      const confirmPassword = document.getElementById('confirmPassword').value;
+
+      if (newPassword !== confirmPassword) {
+        showMessage('Mật khẩu xác nhận không khớp', 'error');
+        return;
+      }
+
+      if (newPassword.length < 6) {
+        showMessage('Mật khẩu phải có ít nhất 6 ký tự', 'error');
+        return;
+      }
+
+      // Update password logic would go here
+      showMessage('Đã đổi mật khẩu thành công', 'success');
+      e.target.reset();
+    });
+
+    // Update employer info
+    async function updateEmployerInfo(updates) {
+      try {
+        const employers = await dataAPI.getEmployers();
+        const employerIndex = employers.findIndex(emp => emp.id === currentEmployer.id);
+        
+        if (employerIndex !== -1) {
+          employers[employerIndex] = {
+            ...employers[employerIndex],
+            ...updates,
+            updatedAt: new Date().toISOString()
+          };
+          
+          // Cập nhật localStorage (trong thực tế là API call)
+          dataAPI.employersData.employers = employers;
+          await dataAPI.saveEmployersData();
+
+          showMessage('✅ Cập nhật thông tin thành công!', 'success');
+        }
+      } catch (error) {
+        showMessage('❌ Có lỗi xảy ra khi cập nhật thông tin', 'error');
+      }
+    }
+
+    // Danger zone actions
+    function exportData() {
+      showMessage('Tính năng xuất dữ liệu đang được phát triển', 'info');
+    }
+
+    function clearCache() {
+      localStorage.removeItem('jobsData');
+      localStorage.removeItem('employersData');
+      showMessage('Đã xóa cache thành công', 'success');
+    }
+
+    function deleteAccount() {
+      if (confirm('Bạn có CHẮC CHẮN muốn xóa tài khoản? Hành động này không thể hoàn tác!')) {
+        if (confirm('Tất cả dữ liệu của bạn sẽ bị xóa vĩnh viễn. Nhập "DELETE" để xác nhận:')) {
+          showMessage('Yêu cầu xóa tài khoản đã được gửi đến quản trị viên', 'info');
+        }
+      }
+    }
+
+    // Initialize page
+    document.addEventListener('DOMContentLoaded', async function() {
+      await dataAPI.init();
+      await loadEmployerData();
+    });
+  </script>
+</body>
+</html>

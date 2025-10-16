@@ -1,0 +1,559 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Quản lý ứng viên - Nhà tuyển dụng</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Inter', sans-serif;
+    }
+
+    :root {
+      --primary: #2563eb;
+      --success: #10b981;
+      --warning: #f59e0b;
+      --danger: #dc2626;
+      --gray-50: #f9fafb;
+      --gray-100: #f3f4f6;
+      --gray-600: #4b5563;
+      --gray-900: #111827;
+    }
+
+    body {
+      background: var(--gray-50);
+      min-height: 100vh;
+    }
+
+    .dashboard-header {
+      background: white;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+      padding: 1rem 2rem;
+    }
+
+    .header-content {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .logo {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--primary);
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .user-menu {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 1.5rem;
+    }
+
+    .nav-links a {
+      color: var(--gray-600);
+      text-decoration: none;
+      font-weight: 500;
+      padding: 0.5rem 1rem;
+      border-radius: 6px;
+      transition: all 0.3s ease;
+    }
+
+    .nav-links a:hover, .nav-links a.active {
+      background: var(--primary);
+      color: white;
+    }
+
+    .dashboard-container {
+      display: flex;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 2rem;
+      gap: 2rem;
+    }
+
+    .sidebar {
+      width: 250px;
+      background: white;
+      border-radius: 12px;
+      padding: 1.5rem;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+      height: fit-content;
+    }
+
+    .nav-section {
+      margin-bottom: 2rem;
+    }
+
+    .nav-title {
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--gray-600);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 1rem;
+    }
+
+    .nav-links-vertical {
+      list-style: none;
+    }
+
+    .nav-links-vertical li {
+      margin-bottom: 0.5rem;
+    }
+
+    .nav-links-vertical a {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 0.75rem 1rem;
+      color: var(--gray-600);
+      text-decoration: none;
+      border-radius: 8px;
+      transition: all 0.3s ease;
+      font-weight: 500;
+    }
+
+    .nav-links-vertical a:hover, .nav-links-vertical a.active {
+      background: var(--primary);
+      color: white;
+    }
+
+    .main-content {
+      flex: 1;
+    }
+
+    .page-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 2rem;
+    }
+
+    .page-title {
+      font-size: 1.5rem;
+      font-weight: 600;
+      color: var(--gray-900);
+    }
+
+    .filter-bar {
+      display: flex;
+      gap: 1rem;
+      margin-bottom: 2rem;
+      flex-wrap: wrap;
+    }
+
+    .filter-select {
+      padding: 0.5rem 1rem;
+      border: 1px solid var(--gray-200);
+      border-radius: 6px;
+      background: white;
+    }
+
+    .candidates-grid {
+      display: grid;
+      gap: 1.5rem;
+    }
+
+    .candidate-card {
+      background: white;
+      padding: 1.5rem;
+      border-radius: 12px;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+      display: flex;
+      gap: 1.5rem;
+      align-items: start;
+    }
+
+    .candidate-avatar {
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      background: var(--primary);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 1.5rem;
+      font-weight: 600;
+    }
+
+    .candidate-info {
+      flex: 1;
+    }
+
+    .candidate-name {
+      font-size: 1.2rem;
+      font-weight: 600;
+      color: var(--gray-900);
+      margin-bottom: 0.5rem;
+    }
+
+    .candidate-meta {
+      color: var(--gray-600);
+      margin-bottom: 0.5rem;
+    }
+
+    .candidate-skills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-bottom: 1rem;
+    }
+
+    .skill-tag {
+      background: var(--gray-100);
+      color: var(--gray-600);
+      padding: 0.25rem 0.75rem;
+      border-radius: 20px;
+      font-size: 0.8rem;
+    }
+
+    .candidate-actions {
+      display: flex;
+      gap: 0.5rem;
+    }
+
+    .btn {
+      padding: 0.5rem 1rem;
+      border: none;
+      border-radius: 6px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .btn-primary {
+      background: var(--primary);
+      color: white;
+    }
+
+    .btn-outline {
+      background: transparent;
+      border: 1px solid var(--gray-300);
+      color: var(--gray-600);
+    }
+
+    .application-info {
+      background: var(--gray-50);
+      padding: 1rem;
+      border-radius: 8px;
+      margin-top: 1rem;
+    }
+
+    .application-job {
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+    }
+
+    .application-date {
+      color: var(--gray-600);
+      font-size: 0.9rem;
+    }
+
+    .status-badge {
+      padding: 0.25rem 0.75rem;
+      border-radius: 20px;
+      font-size: 0.8rem;
+      font-weight: 600;
+    }
+
+    .status-pending {
+      background: #fef3c7;
+      color: #92400e;
+    }
+
+    .status-reviewed {
+      background: #dbeafe;
+      color: #1e40af;
+    }
+
+    .status-rejected {
+      background: #fecaca;
+      color: #dc2626;
+    }
+
+    .status-accepted {
+      background: #dcfce7;
+      color: #166534;
+    }
+
+    .empty-state {
+      text-align: center;
+      padding: 3rem;
+      color: var(--gray-600);
+    }
+
+    .empty-state-icon {
+      font-size: 3rem;
+      margin-bottom: 1rem;
+    }
+
+    @media (max-width: 768px) {
+      .dashboard-container {
+        flex-direction: column;
+        padding: 1rem;
+      }
+
+      .sidebar {
+        width: 100%;
+      }
+
+      .candidate-card {
+        flex-direction: column;
+        text-align: center;
+      }
+
+      .candidate-actions {
+        justify-content: center;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Header -->
+  <header class="dashboard-header">
+    <div class="header-content">
+      <a href="index.html" class="logo">
+        <span>💼</span>
+        Nhật Hào
+      </a>
+      <div class="user-menu">
+        <nav class="nav-links">
+          <a href="employer-dashboard.html">Dashboard</a>
+          <a href="manage-jobs.html">Quản lý tin</a>
+          <a href="candidates.html" class="active">Ứng viên</a>
+          <a href="employer-profile.html">Hồ sơ</a>
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <div class="dashboard-container">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <nav class="nav-section">
+        <div class="nav-title">Ứng viên</div>
+        <ul class="nav-links-vertical">
+          <li><a href="#all" class="active">👥 Tất cả ứng viên</a></li>
+          <li><a href="#new">🆕 Ứng viên mới</a></li>
+          <li><a href="#reviewed">👀 Đã xem xét</a></li>
+          <li><a href="#rejected">❌ Đã từ chối</a></li>
+          <li><a href="#accepted">✅ Đã chấp nhận</a></li>
+        </ul>
+      </nav>
+
+      <nav class="nav-section">
+        <div class="nav-title">Bộ lọc</div>
+        <ul class="nav-links-vertical">
+          <li><a href="#today">📅 Hôm nay</a></li>
+          <li><a href="#week">🗓️ Tuần này</a></li>
+          <li><a href="#month">📆 Tháng này</a></li>
+        </ul>
+      </nav>
+    </aside>
+
+    <!-- Main Content Area -->
+    <main class="main-content">
+      <div class="page-header">
+        <h1 class="page-title">Quản lý ứng viên</h1>
+        <div class="filter-bar">
+          <select class="filter-select" id="jobFilter">
+            <option value="">Tất cả tin tuyển dụng</option>
+          </select>
+          <select class="filter-select" id="statusFilter">
+            <option value="">Tất cả trạng thái</option>
+            <option value="pending">Chờ xem xét</option>
+            <option value="reviewed">Đã xem xét</option>
+            <option value="rejected">Đã từ chối</option>
+            <option value="accepted">Đã chấp nhận</option>
+          </select>
+          <select class="filter-select" id="sortFilter">
+            <option value="newest">Mới nhất</option>
+            <option value="oldest">Cũ nhất</option>
+          </select>
+        </div>
+      </div>
+
+      <div id="candidatesList">
+        <!-- Candidates will be loaded here -->
+      </div>
+    </main>
+  </div>
+
+  <script src="./api.js"></script>
+  <script>
+    // Kiểm tra đăng nhập
+    async function checkAuth() {
+      const loggedEmployer = localStorage.getItem('loggedEmployer') || sessionStorage.getItem('loggedEmployer');
+      if (!loggedEmployer) {
+        window.location.href = 'employer-login.html';
+        return null;
+      }
+      return JSON.parse(loggedEmployer);
+    }
+
+    // Load candidates data
+    async function loadCandidatesData() {
+      const employer = await checkAuth();
+      if (!employer) return;
+
+      await dataAPI.init();
+      
+      // Load jobs của employer
+      const allJobs = await dataAPI.getJobs();
+      const employerJobs = allJobs.filter(job => job.employerId === employer.id);
+      
+      // Load applications
+      const applications = await dataAPI.getApplications();
+      const employerApplications = applications.filter(app => 
+        employerJobs.some(job => job.id === app.jobId)
+      );
+
+      // Populate job filter
+      populateJobFilter(employerJobs);
+
+      // Display candidates
+      displayCandidates(employerApplications, employerJobs);
+    }
+
+    // Populate job filter dropdown
+    function populateJobFilter(jobs) {
+      const jobFilter = document.getElementById('jobFilter');
+      jobFilter.innerHTML = '<option value="">Tất cả tin tuyển dụng</option>';
+      
+      jobs.forEach(job => {
+        const option = document.createElement('option');
+        option.value = job.id;
+        option.textContent = job.jobTitle;
+        jobFilter.appendChild(option);
+      });
+    }
+
+    // Display candidates
+    function displayCandidates(applications, jobs) {
+      const candidatesList = document.getElementById('candidatesList');
+      
+      if (applications.length === 0) {
+        candidatesList.innerHTML = `
+          <div class="empty-state">
+            <div class="empty-state-icon">👥</div>
+            <h3>Chưa có ứng viên nào</h3>
+            <p>Ứng viên sẽ xuất hiện ở đây khi họ ứng tuyển vào tin đăng của bạn</p>
+          </div>
+        `;
+        return;
+      }
+
+      candidatesList.innerHTML = applications.map(app => {
+        const job = jobs.find(j => j.id === app.jobId);
+        const initials = app.applicantName.split(' ').map(n => n[0]).join('').toUpperCase();
+        
+        return `
+          <div class="candidate-card">
+            <div class="candidate-avatar">${initials}</div>
+            <div class="candidate-info">
+              <div class="candidate-name">${app.applicantName}</div>
+              <div class="candidate-meta">${app.applicantEmail} • ${app.applicantPhone}</div>
+              <div class="candidate-skills">
+                <span class="skill-tag">Frontend</span>
+                <span class="skill-tag">React</span>
+                <span class="skill-tag">JavaScript</span>
+              </div>
+              <div class="application-info">
+                <div class="application-job">Ứng tuyển: ${job?.jobTitle || 'Unknown Job'}</div>
+                <div class="application-date">Ngày ứng tuyển: ${formatDate(app.appliedAt)}</div>
+                <div style="margin-top: 0.5rem;">
+                  <span class="status-badge status-${app.status}">${getStatusText(app.status)}</span>
+                </div>
+              </div>
+              <div class="candidate-actions">
+                <button class="btn btn-primary" onclick="viewCandidate(${app.id})">Xem hồ sơ</button>
+                <button class="btn btn-outline" onclick="downloadCV(${app.id})">Tải CV</button>
+                <select class="filter-select" onchange="updateStatus(${app.id}, this.value)" style="margin-left: auto;">
+                  <option value="pending" ${app.status === 'pending' ? 'selected' : ''}>Chờ xem xét</option>
+                  <option value="reviewed" ${app.status === 'reviewed' ? 'selected' : ''}>Đã xem xét</option>
+                  <option value="rejected" ${app.status === 'rejected' ? 'selected' : ''}>Từ chối</option>
+                  <option value="accepted" ${app.status === 'accepted' ? 'selected' : ''}>Chấp nhận</option>
+                </select>
+              </div>
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    // Helper functions
+    function getStatusText(status) {
+      const statuses = {
+        'pending': 'Chờ xem xét',
+        'reviewed': 'Đã xem xét',
+        'rejected': 'Đã từ chối',
+        'accepted': 'Đã chấp nhận'
+      };
+      return statuses[status] || status;
+    }
+
+    function formatDate(dateString) {
+      const date = new Date(dateString);
+      return date.toLocaleDateString('vi-VN');
+    }
+
+    // Candidate actions
+    function viewCandidate(applicationId) {
+      alert('Tính năng xem hồ sơ chi tiết đang được phát triển');
+    }
+
+    function downloadCV(applicationId) {
+      alert('Tính năng tải CV đang được phát triển');
+    }
+
+    async function updateStatus(applicationId, newStatus) {
+      try {
+        // Trong thực tế, đây sẽ là API call
+        const applications = await dataAPI.getApplications();
+        const appIndex = applications.findIndex(app => app.id === applicationId);
+        if (appIndex !== -1) {
+          applications[appIndex].status = newStatus;
+          // Lưu lại applications (trong thực tế là API call)
+          localStorage.setItem('applicationsData', JSON.stringify(applications));
+          alert(`Đã cập nhật trạng thái thành: ${getStatusText(newStatus)}`);
+        }
+      } catch (error) {
+        alert('Có lỗi xảy ra khi cập nhật trạng thái');
+      }
+    }
+
+    // Filter event listeners
+    document.addEventListener('DOMContentLoaded', async function() {
+      await dataAPI.init();
+      await loadCandidatesData();
+
+      // Add filter event listeners
+      document.getElementById('jobFilter').addEventListener('change', filterCandidates);
+      document.getElementById('statusFilter').addEventListener('change', filterCandidates);
+      document.getElementById('sortFilter').addEventListener('change', filterCandidates);
+    });
+
+    async function filterCandidates() {
+      // Implementation for filtering would go here
+      await loadCandidatesData();
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <title>Tìm ứng viên</title>
+  <link rel="stylesheet" href="./style/main.css">
+  <link rel="stylesheet" href="./style/employer.css">
+  <script src="../assets/js/data.js"></script>
+</head>
+<body>
+  <header>
+    <nav>
+      <a href="post-job.html">Đăng tuyển</a>
+      <a href="find-candidates.html">Tìm ứng viên</a>
+      <a href="../index.html">Trang chủ</a>
+    </nav>
+  </header>
+
+  <main>
+    <h2>Tìm kiếm ứng viên</h2>
+    <input type="text" id="keyword" placeholder="Nhập kỹ năng hoặc thành phố...">
+    <button onclick="searchCandidate()">Tìm</button>
+
+    <div id="result"></div>
+  </main>
+
+  <script>
+    function searchCandidate() {
+      const kw = document.getElementById("keyword").value.toLowerCase();
+      const list = candidates.filter(c =>
+        c.name.toLowerCase().includes(kw) ||
+        c.skill.toLowerCase().includes(kw) ||
+        c.city.toLowerCase().includes(kw)
+      );
+      const div = document.getElementById("result");
+      div.innerHTML = list.length ? list.map(c =>
+        `<div class="card">
+          <h3>${c.name}</h3>
+          <p>Kỹ năng: ${c.skill}</p>
+          <p>Thành phố: ${c.city}</p>
+        </div>`
+      ).join("") : "<p>Không tìm thấy ứng viên phù hợp</p>";
+    }
+  </script>
+</body>
+</html>

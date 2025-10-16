@@ -1,0 +1,678 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard - Nhà tuyển dụng</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    /* Giữ nguyên toàn bộ CSS bạn đã có */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Inter', sans-serif;
+    }
+
+    :root {
+      --primary: #2563eb;
+      --primary-dark: #1d4ed8;
+      --success: #10b981;
+      --warning: #f59e0b;
+      --danger: #dc2626;
+      --gray-50: #f9fafb;
+      --gray-100: #f3f4f6;
+      --gray-200: #e5e7eb;
+      --gray-600: #4b5563;
+      --gray-900: #111827;
+    }
+
+    body {
+      background: var(--gray-50);
+      min-height: 100vh;
+    }
+
+    /* Header */
+    .dashboard-header {
+      background: white;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+      padding: 1rem 2rem;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .header-content {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .logo {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--primary);
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .user-menu {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .user-info {
+      text-align: right;
+    }
+
+    .user-name {
+      font-weight: 600;
+      color: var(--gray-900);
+    }
+
+    .user-company {
+      font-size: 0.9rem;
+      color: var(--gray-600);
+    }
+
+    .logout-btn {
+      background: var(--danger);
+      color: white;
+      border: none;
+      padding: 0.5rem 1rem;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: 500;
+      transition: background 0.3s ease;
+    }
+
+    .logout-btn:hover {
+      background: #b91c1c;
+    }
+
+    /* Sidebar */
+    .dashboard-container {
+      display: flex;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 2rem;
+      gap: 2rem;
+    }
+
+    .sidebar {
+      width: 250px;
+      background: white;
+      border-radius: 12px;
+      padding: 1.5rem;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+      height: fit-content;
+    }
+
+    .nav-section {
+      margin-bottom: 2rem;
+    }
+
+    .nav-title {
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--gray-600);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 1rem;
+    }
+
+    .nav-links {
+      list-style: none;
+    }
+
+    .nav-links li {
+      margin-bottom: 0.5rem;
+    }
+
+    .nav-links a {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 0.75rem 1rem;
+      color: var(--gray-600);
+      text-decoration: none;
+      border-radius: 8px;
+      transition: all 0.3s ease;
+      font-weight: 500;
+    }
+
+    .nav-links a:hover, .nav-links a.active {
+      background: var(--primary);
+      color: white;
+    }
+
+    /* Main Content */
+    .main-content {
+      flex: 1;
+    }
+
+    .welcome-banner {
+      background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+      color: white;
+      padding: 2rem;
+      border-radius: 12px;
+      margin-bottom: 2rem;
+    }
+
+    .welcome-banner h1 {
+      font-size: 1.8rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1.5rem;
+      margin-bottom: 2rem;
+    }
+
+    .stat-card {
+      background: white;
+      padding: 1.5rem;
+      border-radius: 12px;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+      border-left: 4px solid var(--primary);
+    }
+
+    .stat-value {
+      font-size: 2rem;
+      font-weight: 700;
+      color: var(--gray-900);
+      margin-bottom: 0.5rem;
+    }
+
+    .stat-label {
+      color: var(--gray-600);
+      font-weight: 500;
+    }
+
+    .quick-actions {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 1.5rem;
+      margin-bottom: 2rem;
+    }
+
+    .action-card {
+      background: white;
+      padding: 1.5rem;
+      border-radius: 12px;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+      text-align: center;
+      cursor: pointer;
+      transition: transform 0.3s ease;
+    }
+
+    .action-card:hover {
+      transform: translateY(-2px);
+    }
+
+    .action-icon {
+      font-size: 2rem;
+      margin-bottom: 1rem;
+    }
+
+    .action-title {
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+      color: var(--gray-900);
+    }
+
+    .action-description {
+      color: var(--gray-600);
+      font-size: 0.9rem;
+    }
+
+    .recent-activities {
+      background: white;
+      padding: 1.5rem;
+      border-radius: 12px;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    }
+
+    .section-title {
+      font-size: 1.2rem;
+      font-weight: 600;
+      margin-bottom: 1rem;
+      color: var(--gray-900);
+    }
+
+    .activity-list {
+      list-style: none;
+    }
+
+    .activity-item {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      padding: 1rem 0;
+      border-bottom: 1px solid var(--gray-200);
+    }
+
+    .activity-item:last-child {
+      border-bottom: none;
+    }
+
+    .activity-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: var(--gray-100);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.2rem;
+    }
+
+    .activity-content {
+      flex: 1;
+    }
+
+    .activity-title {
+      font-weight: 500;
+      margin-bottom: 0.25rem;
+    }
+
+    .activity-time {
+      font-size: 0.8rem;
+      color: var(--gray-600);
+    }
+
+    /* Thêm CSS cho notification */
+    .notification {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      padding: 15px 20px;
+      border-radius: 5px;
+      color: white;
+      z-index: 1000;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      animation: slideIn 0.3s ease;
+    }
+
+    .notification.success { background: #28a745; }
+    .notification.error { background: #dc3545; }
+    .notification.info { background: #17a2b8; }
+
+    .notification button {
+      background: none;
+      border: none;
+      color: white;
+      cursor: pointer;
+      font-size: 1.2em;
+    }
+
+    @keyframes slideIn {
+      from { transform: translateX(100%); }
+      to { transform: translateX(0); }
+    }
+
+    @media (max-width: 768px) {
+      .dashboard-container {
+        flex-direction: column;
+        padding: 1rem;
+      }
+
+      .sidebar {
+        width: 100%;
+      }
+
+      .header-content {
+        flex-direction: column;
+        gap: 1rem;
+        text-align: center;
+      }
+
+      .user-info {
+        text-align: center;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Header -->
+  <header class="dashboard-header">
+    <div class="header-content">
+      <a href="index.html" class="logo">
+        <span>💼</span>
+        Nhật Hào
+      </a>
+      <div class="user-menu">
+        <div class="user-info">
+          <div class="user-name" id="userName">Nguyễn Văn A</div>
+          <div class="user-company" id="userCompany">Công ty ABC</div>
+        </div>
+        <button class="logout-btn" onclick="logout()">Đăng xuất</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <div class="dashboard-container">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <nav class="nav-section">
+        <div class="nav-title">Tổng quan</div>
+        <ul class="nav-links">
+          <li><a href="#dashboard" class="active">📊 Bảng điều khiển</a></li>
+        </ul>
+      </nav>
+
+      <nav class="nav-section">
+        <div class="nav-title">Quản lý</div>
+        <ul class="nav-links">
+          <li><a href="post-job.html">💼 Đăng tin tuyển dụng</a></li>
+          <li><a href="manage-jobs.html">📋 Quản lý tin đăng</a></li>
+          <li><a href="candidates.html">👥 Ứng viên</a></li>
+        </ul>
+      </nav>
+
+      <nav class="nav-section">
+        <div class="nav-title">Phân tích</div>
+        <ul class="nav-links">
+          <li><a href="analytics.html">📈 Thống kê</a></li>
+          <li><a href="reports.html">📊 Báo cáo</a></li>
+        </ul>
+      </nav>
+
+      <nav class="nav-section">
+        <div class="nav-title">Tài khoản</div>
+        <ul class="nav-links">
+          <li><a href="employer-profile.html">👤 Hồ sơ công ty</a></li>
+          <li><a href="employer-settings.html">⚙️ Cài đặt</a></li>
+        </ul>
+      </nav>
+    </aside>
+
+    <!-- Main Content Area -->
+    <main class="main-content">
+      <!-- Welcome Banner -->
+      <div class="welcome-banner">
+        <h1>Chào mừng trở lại!</h1>
+        <p>Quản lý tuyển dụng và tìm kiếm ứng viên tiềm năng</p>
+      </div>
+
+      <!-- Stats Grid -->
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-value" id="totalJobs">0</div>
+          <div class="stat-label">Tin đang tuyển</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-value" id="totalApplications">0</div>
+          <div class="stat-label">Đơn ứng tuyển</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-value" id="newCandidates">0</div>
+          <div class="stat-label">Ứng viên mới</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-value">85%</div>
+          <div class="stat-label">Tỷ lệ hoàn thành</div>
+        </div>
+      </div>
+
+      <!-- Quick Actions -->
+      <div class="quick-actions">
+        <div class="action-card" onclick="location.href='post-job.html'">
+          <div class="action-icon">📝</div>
+          <div class="action-title">Đăng tin mới</div>
+          <div class="action-description">Tạo tin tuyển dụng mới</div>
+        </div>
+        <div class="action-card" onclick="location.href='manage-jobs.html'">
+          <div class="action-icon">📋</div>
+          <div class="action-title">Quản lý tin đăng</div>
+          <div class="action-description">Xem và chỉnh sửa tin đăng</div>
+        </div>
+        <div class="action-card" onclick="location.href='candidates.html'">
+          <div class="action-icon">👥</div>
+          <div class="action-title">Xem ứng viên</div>
+          <div class="action-description">Duyệt hồ sơ ứng viên</div>
+        </div>
+        <div class="action-card" onclick="location.href='analytics.html'">
+          <div class="action-icon">📈</div>
+          <div class="action-title">Phân tích</div>
+          <div class="action-description">Xem báo cáo hiệu suất</div>
+        </div>
+      </div>
+
+      <!-- Recent Activities -->
+      <div class="recent-activities">
+        <h3 class="section-title">Hoạt động gần đây</h3>
+        <ul class="activity-list" id="activityList">
+          <!-- Activities will be loaded here -->
+        </ul>
+      </div>
+    </main>
+  </div>
+
+  <script>
+    // Kiểm tra đăng nhập
+    function checkAuth() {
+      const loggedEmployer = localStorage.getItem('loggedEmployer') || sessionStorage.getItem('loggedEmployer');
+      if (!loggedEmployer) {
+        window.location.href = 'employer-login.html';
+        return null;
+      }
+      return JSON.parse(loggedEmployer);
+    }
+
+    // Hiển thị notification
+    function showNotification(message, type = 'info') {
+      const notification = document.createElement('div');
+      notification.className = `notification ${type}`;
+      notification.innerHTML = `
+        <span>${message}</span>
+        <button onclick="this.parentElement.remove()">&times;</button>
+      `;
+      
+      document.body.appendChild(notification);
+      
+      setTimeout(() => {
+        if (notification.parentElement) {
+          notification.remove();
+        }
+      }, 3000);
+    }
+
+    // Load dashboard data - CẬP NHẬT
+    function loadDashboardData(employer) {
+      console.log('🔄 Đang tải dữ liệu dashboard...');
+      
+      // Cập nhật thông tin user
+      document.getElementById('userName').textContent = employer.contactPerson;
+      document.getElementById('userCompany').textContent = employer.companyName;
+
+      // Load jobs data từ employerJobs (đồng bộ với manage-jobs)
+      const employerJobs = JSON.parse(localStorage.getItem('employerJobs') || '[]');
+      console.log('📊 Jobs found in employerJobs:', employerJobs);
+
+      // Load applications
+      const applications = JSON.parse(localStorage.getItem('jobApplications') || '[]');
+      const employerApplications = applications.filter(app => 
+        employerJobs.some(job => job.id === app.jobId)
+      );
+
+      // Update stats
+      document.getElementById('totalJobs').textContent = employerJobs.length;
+      document.getElementById('totalApplications').textContent = employerApplications.length;
+      
+      // Tính ứng viên mới (7 ngày gần đây)
+      const newCandidates = employerApplications.filter(app => {
+        const appliedDate = new Date(app.appliedAt);
+        const today = new Date();
+        const diffTime = today - appliedDate;
+        const diffDays = diffTime / (1000 * 60 * 60 * 24);
+        return diffDays <= 7;
+      }).length;
+      
+      document.getElementById('newCandidates').textContent = newCandidates;
+
+      // Load activities
+      loadRecentActivities(employerJobs, employerApplications);
+    }
+
+    // Load recent activities - CẬP NHẬT
+    function loadRecentActivities(jobs, applications) {
+      const activityList = document.getElementById('activityList');
+      const activities = [];
+
+      // Add job posting activities
+      jobs.slice(0, 3).forEach(job => {
+        activities.push({
+          icon: '💼',
+          title: `Đã đăng tin: ${job.jobTitle || job.title}`,
+          time: formatTimeAgo(job.datePosted || job.createdAt)
+        });
+      });
+
+      // Add application activities
+      applications.slice(0, 3).forEach(app => {
+        activities.push({
+          icon: '👤',
+          title: `Ứng viên mới: ${app.applicantName} ứng tuyển ${app.jobTitle}`,
+          time: formatTimeAgo(app.appliedAt)
+        });
+      });
+
+      // Sort by time (mới nhất trước)
+      activities.sort((a, b) => new Date(b.time) - new Date(a.time));
+
+      // Display activities
+      activityList.innerHTML = activities.slice(0, 5).map(activity => `
+        <li class="activity-item">
+          <div class="activity-icon">${activity.icon}</div>
+          <div class="activity-content">
+            <div class="activity-title">${activity.title}</div>
+            <div class="activity-time">${activity.time}</div>
+          </div>
+        </li>
+      `).join('');
+    }
+
+    // Format time ago
+    function formatTimeAgo(dateString) {
+      if (!dateString) return 'Chưa xác định';
+      
+      const date = new Date(dateString);
+      const now = new Date();
+      const diffMs = now - date;
+      const diffMins = Math.floor(diffMs / 60000);
+      const diffHours = Math.floor(diffMs / 3600000);
+      const diffDays = Math.floor(diffMs / 86400000);
+
+      if (diffMins < 1) return 'Vừa xong';
+      if (diffMins < 60) return `${diffMins} phút trước`;
+      if (diffHours < 24) return `${diffHours} giờ trước`;
+      if (diffDays < 7) return `${diffDays} ngày trước`;
+      return date.toLocaleDateString('vi-VN');
+    }
+
+    // Logout
+    function logout() {
+      localStorage.removeItem('loggedEmployer');
+      sessionStorage.removeItem('loggedEmployer');
+      window.location.href = 'employer-login.html';
+    }
+
+    // Hàm thêm công việc mới - ĐỒNG BỘ VỚI MANAGE-JOBS
+    function addNewJob(jobData) {
+      console.log('➕ Đang thêm công việc mới:', jobData);
+      
+      // Lấy danh sách công việc hiện tại từ localStorage
+      let jobs = JSON.parse(localStorage.getItem('employerJobs')) || [];
+      
+      // Tạo job mới với cấu trúc đồng bộ
+      const newJob = {
+        id: Date.now(), // ID duy nhất
+        employerId: JSON.parse(localStorage.getItem('loggedEmployer') || sessionStorage.getItem('loggedEmployer')).id,
+        jobTitle: jobData.title,
+        title: jobData.title, // Đồng bộ cả hai trường
+        company: jobData.company,
+        location: jobData.location,
+        salary: jobData.salary,
+        jobType: jobData.jobType,
+        description: jobData.description,
+        requirements: jobData.requirements,
+        datePosted: new Date().toISOString(),
+        createdAt: new Date().toISOString(), // Đồng bộ cả hai trường
+        status: 'active',
+        applications: 0,
+        applicants: 0, // Đồng bộ cả hai trường
+        views: 0
+      };
+      
+      jobs.push(newJob);
+      
+      // Lưu lại vào localStorage
+      localStorage.setItem('employerJobs', JSON.stringify(jobs));
+      console.log('💾 Đã lưu công việc mới vào employerJobs:', newJob);
+      
+      // Đồng bộ với API nếu có
+      try {
+        if (typeof dataAPI !== 'undefined' && dataAPI.addJob) {
+          dataAPI.addJob(newJob);
+          console.log('🌐 Đã đồng bộ với API');
+        }
+      } catch (error) {
+        console.log('⚠️ Không thể đồng bộ với API');
+      }
+      
+      // Hiển thị thông báo
+      showNotification('Công việc đã được thêm thành công!', 'success');
+      
+      // Kích hoạt sự kiện để các trang khác biết có thay đổi
+      window.dispatchEvent(new Event('employerJobsUpdated'));
+      
+      return newJob;
+    }
+
+    // Lắng nghe sự kiện từ các trang khác
+    window.addEventListener('employerJobsUpdated', function() {
+      console.log('🔄 Nhận sự kiện cập nhật jobs, reloading dashboard...');
+      const employer = checkAuth();
+      if (employer) {
+        loadDashboardData(employer);
+      }
+    });
+
+    // Tự động refresh khi quay lại trang
+    window.addEventListener('pageshow', function() {
+      const employer = checkAuth();
+      if (employer) {
+        loadDashboardData(employer);
+      }
+    });
+
+    // Khởi tạo dashboard
+    document.addEventListener('DOMContentLoaded', function() {
+      console.log('🚀 Khởi tạo dashboard...');
+      const employer = checkAuth();
+      if (employer) {
+        loadDashboardData(employer);
+      }
+    });
+
+    // Hàm helper để kiểm tra dữ liệu (dùng cho debug)
+    function debugEmployerJobs() {
+      const jobs = JSON.parse(localStorage.getItem('employerJobs') || '[]');
+      console.log('🐛 Debug employerJobs:', jobs);
+      return jobs;
+    }
+  </script>
+</body>
+</html>

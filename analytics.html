@@ -1,0 +1,544 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Thống kê - Nhà tuyển dụng</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Inter', sans-serif;
+    }
+
+    :root {
+      --primary: #2563eb;
+      --success: #10b981;
+      --warning: #f59e0b;
+      --danger: #dc2626;
+      --gray-50: #f9fafb;
+      --gray-100: #f3f4f6;
+      --gray-600: #4b5563;
+      --gray-900: #111827;
+    }
+
+    body {
+      background: var(--gray-50);
+      min-height: 100vh;
+    }
+
+    .dashboard-header {
+      background: white;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+      padding: 1rem 2rem;
+    }
+
+    .header-content {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .logo {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--primary);
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .user-menu {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 1.5rem;
+    }
+
+    .nav-links a {
+      color: var(--gray-600);
+      text-decoration: none;
+      font-weight: 500;
+      padding: 0.5rem 1rem;
+      border-radius: 6px;
+      transition: all 0.3s ease;
+    }
+
+    .nav-links a:hover, .nav-links a.active {
+      background: var(--primary);
+      color: white;
+    }
+
+    .dashboard-container {
+      display: flex;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 2rem;
+      gap: 2rem;
+    }
+
+    .sidebar {
+      width: 250px;
+      background: white;
+      border-radius: 12px;
+      padding: 1.5rem;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+      height: fit-content;
+    }
+
+    .nav-section {
+      margin-bottom: 2rem;
+    }
+
+    .nav-title {
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--gray-600);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 1rem;
+    }
+
+    .nav-links-vertical {
+      list-style: none;
+    }
+
+    .nav-links-vertical li {
+      margin-bottom: 0.5rem;
+    }
+
+    .nav-links-vertical a {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 0.75rem 1rem;
+      color: var(--gray-600);
+      text-decoration: none;
+      border-radius: 8px;
+      transition: all 0.3s ease;
+      font-weight: 500;
+    }
+
+    .nav-links-vertical a:hover, .nav-links-vertical a.active {
+      background: var(--primary);
+      color: white;
+    }
+
+    .main-content {
+      flex: 1;
+    }
+
+    .page-header {
+      margin-bottom: 2rem;
+    }
+
+    .page-title {
+      font-size: 1.5rem;
+      font-weight: 600;
+      color: var(--gray-900);
+      margin-bottom: 0.5rem;
+    }
+
+    .page-subtitle {
+      color: var(--gray-600);
+    }
+
+    .filter-bar {
+      display: flex;
+      gap: 1rem;
+      margin-bottom: 2rem;
+      flex-wrap: wrap;
+    }
+
+    .filter-select {
+      padding: 0.5rem 1rem;
+      border: 1px solid var(--gray-200);
+      border-radius: 6px;
+      background: white;
+    }
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1.5rem;
+      margin-bottom: 2rem;
+    }
+
+    .stat-card {
+      background: white;
+      padding: 1.5rem;
+      border-radius: 12px;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+      text-align: center;
+    }
+
+    .stat-number {
+      font-size: 2rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+    }
+
+    .stat-primary { color: var(--primary); }
+    .stat-success { color: var(--success); }
+    .stat-warning { color: var(--warning); }
+    .stat-danger { color: var(--danger); }
+
+    .stat-label {
+      color: var(--gray-600);
+      font-weight: 500;
+    }
+
+    .stat-change {
+      font-size: 0.8rem;
+      margin-top: 0.5rem;
+    }
+
+    .positive { color: var(--success); }
+    .negative { color: var(--danger); }
+
+    .charts-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+      margin-bottom: 2rem;
+    }
+
+    .chart-card {
+      background: white;
+      padding: 1.5rem;
+      border-radius: 12px;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    }
+
+    .chart-title {
+      font-size: 1.1rem;
+      font-weight: 600;
+      margin-bottom: 1rem;
+      color: var(--gray-900);
+    }
+
+    .chart-placeholder {
+      height: 200px;
+      background: var(--gray-50);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--gray-600);
+    }
+
+    .top-jobs {
+      background: white;
+      padding: 1.5rem;
+      border-radius: 12px;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    }
+
+    .job-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem 0;
+      border-bottom: 1px solid var(--gray-200);
+    }
+
+    .job-item:last-child {
+      border-bottom: none;
+    }
+
+    .job-info h4 {
+      margin-bottom: 0.25rem;
+      color: var(--gray-900);
+    }
+
+    .job-meta {
+      color: var(--gray-600);
+      font-size: 0.9rem;
+    }
+
+    .job-stats {
+      text-align: right;
+    }
+
+    .applications-count {
+      font-weight: 600;
+      color: var(--primary);
+    }
+
+    .views-count {
+      color: var(--gray-600);
+      font-size: 0.8rem;
+    }
+
+    @media (max-width: 768px) {
+      .dashboard-container {
+        flex-direction: column;
+        padding: 1rem;
+      }
+
+      .sidebar {
+        width: 100%;
+      }
+
+      .charts-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Header -->
+  <header class="dashboard-header">
+    <div class="header-content">
+      <a href="index.html" class="logo">
+        <span>💼</span>
+        Nhật Hào
+      </a>
+      <div class="user-menu">
+        <nav class="nav-links">
+          <a href="employer-dashboard.html">Dashboard</a>
+          <a href="manage-jobs.html">Quản lý tin</a>
+          <a href="candidates.html">Ứng viên</a>
+          <a href="analytics.html" class="active">Thống kê</a>
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <div class="dashboard-container">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <nav class="nav-section">
+        <div class="nav-title">Phân tích</div>
+        <ul class="nav-links-vertical">
+          <li><a href="#overview" class="active">📊 Tổng quan</a></li>
+          <li><a href="#performance">📈 Hiệu suất</a></li>
+          <li><a href="#applications">👥 Ứng viên</a></li>
+          <li><a href="#jobs">💼 Tin tuyển dụng</a></li>
+        </ul>
+      </nav>
+
+      <nav class="nav-section">
+        <div class="nav-title">Báo cáo</div>
+        <ul class="nav-links-vertical">
+          <li><a href="#weekly">📅 Tuần này</a></li>
+          <li><a href="#monthly">🗓️ Tháng này</a></li>
+          <li><a href="#quarterly">📆 Quý này</a></li>
+          <li><a href="#custom">🔧 Tùy chỉnh</a></li>
+        </ul>
+      </nav>
+    </aside>
+
+    <!-- Main Content Area -->
+    <main class="main-content">
+      <div class="page-header">
+        <h1 class="page-title">Phân tích & Thống kê</h1>
+        <p class="page-subtitle">Theo dõi hiệu suất tuyển dụng và phân tích dữ liệu</p>
+      </div>
+
+      <div class="filter-bar">
+        <select class="filter-select" id="timeRange">
+          <option value="7days">7 ngày qua</option>
+          <option value="30days" selected>30 ngày qua</option>
+          <option value="90days">90 ngày qua</option>
+          <option value="year">Năm nay</option>
+        </select>
+        <select class="filter-select" id="jobFilter">
+          <option value="">Tất cả tin tuyển dụng</option>
+        </select>
+        <button class="filter-select" onclick="exportReport()" style="cursor: pointer;">📥 Xuất báo cáo</button>
+      </div>
+
+      <!-- Stats Overview -->
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-number stat-primary" id="totalViews">0</div>
+          <div class="stat-label">Lượt xem tin</div>
+          <div class="stat-change positive" id="viewsChange">+12%</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number stat-success" id="totalApplications">0</div>
+          <div class="stat-label">Đơn ứng tuyển</div>
+          <div class="stat-change positive" id="applicationsChange">+8%</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number stat-warning" id="conversionRate">0%</div>
+          <div class="stat-label">Tỷ lệ chuyển đổi</div>
+          <div class="stat-change positive" id="conversionChange">+2%</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number stat-danger" id="avgResponseTime">0h</div>
+          <div class="stat-label">Thời gian phản hồi TB</div>
+          <div class="stat-change negative" id="responseChange">-5%</div>
+        </div>
+      </div>
+
+      <!-- Charts -->
+      <div class="charts-grid">
+        <div class="chart-card">
+          <h3 class="chart-title">Ứng tuyển theo tháng</h3>
+          <div class="chart-placeholder">
+            📈 Biểu đồ ứng tuyển theo tháng
+          </div>
+        </div>
+        <div class="chart-card">
+          <h3 class="chart-title">Phân bố ứng viên</h3>
+          <div class="chart-placeholder">
+            🥧 Biểu đồ phân bố ứng viên
+          </div>
+        </div>
+      </div>
+
+      <!-- Top Performing Jobs -->
+      <div class="top-jobs">
+        <h3 class="chart-title">Tin tuyển dụng hiệu quả nhất</h3>
+        <div id="topJobsList">
+          <!-- Top jobs will be loaded here -->
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <script src="./api.js"></script>
+  <script>
+    let currentEmployer = null;
+
+    // Kiểm tra đăng nhập
+    async function checkAuth() {
+      const loggedEmployer = localStorage.getItem('loggedEmployer') || sessionStorage.getItem('loggedEmployer');
+      if (!loggedEmployer) {
+        window.location.href = 'employer-login.html';
+        return null;
+      }
+      return JSON.parse(loggedEmployer);
+    }
+
+    // Load analytics data
+    async function loadAnalyticsData() {
+      currentEmployer = await checkAuth();
+      if (!currentEmployer) return;
+
+      await dataAPI.init();
+      
+      // Load jobs và applications
+      const jobs = await dataAPI.getJobs();
+      const applications = await dataAPI.getApplications();
+      
+      const employerJobs = jobs.filter(job => job.employerId === currentEmployer.id);
+      const employerApplications = applications.filter(app => 
+        employerJobs.some(job => job.id === app.jobId)
+      );
+
+      // Populate job filter
+      populateJobFilter(employerJobs);
+
+      // Calculate and display stats
+      calculateStats(employerJobs, employerApplications);
+      
+      // Display top jobs
+      displayTopJobs(employerJobs, employerApplications);
+    }
+
+    // Populate job filter
+    function populateJobFilter(jobs) {
+      const jobFilter = document.getElementById('jobFilter');
+      jobFilter.innerHTML = '<option value="">Tất cả tin tuyển dụng</option>';
+      
+      jobs.forEach(job => {
+        const option = document.createElement('option');
+        option.value = job.id;
+        option.textContent = job.jobTitle;
+        jobFilter.appendChild(option);
+      });
+    }
+
+    // Calculate statistics
+    function calculateStats(jobs, applications) {
+      const totalViews = jobs.reduce((sum, job) => sum + (job.views || 0), 0);
+      const totalApplications = applications.length;
+      
+      // Calculate conversion rate (applications per 100 views)
+      const conversionRate = totalViews > 0 ? ((totalApplications / totalViews) * 100).toFixed(1) : 0;
+      
+      // Calculate average response time (mock data)
+      const avgResponseTime = '24h';
+
+      // Update stats
+      document.getElementById('totalViews').textContent = totalViews.toLocaleString();
+      document.getElementById('totalApplications').textContent = totalApplications.toLocaleString();
+      document.getElementById('conversionRate').textContent = conversionRate + '%';
+      document.getElementById('avgResponseTime').textContent = avgResponseTime;
+    }
+
+    // Display top performing jobs
+    function displayTopJobs(jobs, applications) {
+      const topJobsList = document.getElementById('topJobsList');
+      
+      if (jobs.length === 0) {
+        topJobsList.innerHTML = '<p style="text-align: center; color: var(--gray-600); padding: 2rem;">Chưa có tin tuyển dụng nào</p>';
+        return;
+      }
+
+      // Sort jobs by number of applications
+      const jobsWithStats = jobs.map(job => {
+        const jobApplications = applications.filter(app => app.jobId === job.id);
+        return {
+          ...job,
+          applications: jobApplications.length,
+          views: job.views || 0
+        };
+      }).sort((a, b) => b.applications - a.applications).slice(0, 5);
+
+      topJobsList.innerHTML = jobsWithStats.map(job => `
+        <div class="job-item">
+          <div class="job-info">
+            <h4>${job.jobTitle}</h4>
+            <div class="job-meta">${job.location} • ${getJobTypeText(job.jobType)}</div>
+          </div>
+          <div class="job-stats">
+            <div class="applications-count">${job.applications} ứng tuyển</div>
+            <div class="views-count">${job.views} lượt xem</div>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    // Helper functions
+    function getJobTypeText(type) {
+      const types = {
+        'fulltime': 'Toàn thời gian',
+        'parttime': 'Bán thời gian',
+        'contract': 'Hợp đồng',
+        'internship': 'Thực tập',
+        'remote': 'Từ xa'
+      };
+      return types[type] || type;
+    }
+
+    // Export report
+    function exportReport() {
+      alert('Tính năng xuất báo cáo đang được phát triển');
+    }
+
+    // Filter event listeners
+    document.getElementById('timeRange').addEventListener('change', loadAnalyticsData);
+    document.getElementById('jobFilter').addEventListener('change', loadAnalyticsData);
+
+    // Initialize page
+    document.addEventListener('DOMContentLoaded', async function() {
+      await dataAPI.init();
+      await loadAnalyticsData();
+    });
+  </script>
+</body>
+</html>

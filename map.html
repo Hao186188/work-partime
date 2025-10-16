@@ -1,0 +1,698 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bản Đồ Việc Làm - Tuyển dụng</title>
+  <link rel="stylesheet" href="./style/styles.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <style>
+    .map-section {
+      padding: 60px 0;
+      background: #f8f9fa;
+    }
+
+    .map-section h2 {
+      text-align: center;
+      margin-bottom: 40px;
+      font-size: 2.5rem;
+      color: #333;
+    }
+
+    .map-container {
+      display: grid;
+      grid-template-columns: 1fr 400px;
+      gap: 30px;
+      height: 600px;
+      margin-bottom: 40px;
+    }
+
+    #jobMap {
+      height: 100%;
+      border-radius: 12px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    }
+
+    .job-list-sidebar {
+      background: white;
+      border-radius: 12px;
+      padding: 25px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+      overflow-y: auto;
+    }
+
+    .job-list-sidebar h3 {
+      color: #2563eb;
+      margin-bottom: 20px;
+      padding-bottom: 10px;
+      border-bottom: 2px solid #e2e8f0;
+    }
+
+    .location-job-item {
+      padding: 15px;
+      border: 1px solid #e2e8f0;
+      border-radius: 8px;
+      margin-bottom: 15px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .location-job-item:hover {
+      border-color: #2563eb;
+      transform: translateX(5px);
+    }
+
+    .location-job-item.active {
+      border-color: #2563eb;
+      background: #f0f7ff;
+    }
+
+    .location-name {
+      font-weight: 600;
+      color: #2563eb;
+      margin-bottom: 5px;
+    }
+
+    .job-count {
+      color: #059669;
+      font-weight: 600;
+      font-size: 0.9rem;
+    }
+
+    .job-list {
+      margin-top: 10px;
+    }
+
+    .mini-job-item {
+      padding: 8px;
+      background: #f8fafc;
+      border-radius: 4px;
+      margin-bottom: 5px;
+      font-size: 0.9rem;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .mini-job-item:hover {
+      background: #e2e8f0;
+      transform: translateX(3px);
+    }
+
+    .job-type-badge {
+      display: inline-block;
+      padding: 2px 8px;
+      border-radius: 12px;
+      font-size: 0.7rem;
+      font-weight: 600;
+      margin-left: 5px;
+    }
+
+    .part-time-badge {
+      background: #dbeafe;
+      color: #1e40af;
+    }
+
+    .full-time-badge {
+      background: #dcfce7;
+      color: #166534;
+    }
+
+    .map-controls {
+      display: flex;
+      gap: 15px;
+      margin-bottom: 20px;
+      flex-wrap: wrap;
+    }
+
+    .control-btn {
+      background: white;
+      border: 2px solid #e2e8f0;
+      padding: 10px 20px;
+      border-radius: 25px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      font-weight: 500;
+    }
+
+    .control-btn:hover {
+      border-color: #2563eb;
+      color: #2563eb;
+    }
+
+    .control-btn.active {
+      background: #2563eb;
+      color: white;
+      border-color: #2563eb;
+    }
+
+    .location-stats {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 20px;
+      margin-top: 40px;
+    }
+
+    .stat-card {
+      background: white;
+      padding: 20px;
+      border-radius: 12px;
+      text-align: center;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    }
+
+    .stat-card h4 {
+      color: #2563eb;
+      margin-bottom: 10px;
+    }
+
+    .stat-number {
+      font-size: 2rem;
+      font-weight: 700;
+      color: #059669;
+    }
+
+    .student-friendly-tag {
+      display: inline-block;
+      background: linear-gradient(135deg, #f59e0b, #d97706);
+      color: white;
+      padding: 3px 10px;
+      border-radius: 15px;
+      font-size: 0.7rem;
+      font-weight: 600;
+      margin-left: 8px;
+    }
+
+    @media (max-width: 768px) {
+      .map-container {
+        grid-template-columns: 1fr;
+        height: 400px;
+      }
+
+      .map-controls {
+        justify-content: center;
+      }
+
+      .location-stats {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- HEADER -->
+  <header class="header">
+    <div class="container">
+      <div class="logo"><a href="index.html" style="text-decoration: none; color: inherit;">Nhật Hào</a></div>
+      <nav class="nav">
+        <a href="index.html">Trang chủ</a>
+        <a href="work.html">Việc làm</a>
+        <a href="cv.html">CV</a>
+        <a href="map.html" class="active">Map</a>
+        <a href="account.html">Đăng ký/Đăng nhập</a>
+        <div class="dropdown">
+          <a href="#" class="dropdown-toggle">Liên hệ</a>
+          <div class="dropdown-menu" id="contactDropdown">
+            <a href="https://zalo.me/0788984741" class="dropdown-item" target="_blank">
+              <span class="zalo-icon">Z</span>
+              Zalo: 0788984741
+            </a>
+            <a href="https://facebook.com/share/17PfiN1Xrk/" class="dropdown-item" target="_blank">
+              <span class="facebook-icon">f</span>
+              Facebook: Như Ý
+            </a>
+          </div>
+        </div>
+      </nav>
+    </div>
+  </header>
+
+  <!-- MAP SECTION -->
+  <section class="map-section">
+    <div class="container">
+      <h2>Bản Đồ Việc Làm Part-time Cho Sinh Viên</h2>
+      
+      <div class="map-controls">
+        <button class="control-btn active" data-type="all">Tất cả</button>
+        <button class="control-btn" data-type="part-time">Part-time</button>
+        <button class="control-btn" data-type="gia sư">Gia sư</button>
+        <button class="control-btn" data-type="pha chế">Pha chế</button>
+        <button class="control-btn" data-type="bán hàng">Bán hàng</button>
+        <button class="control-btn" data-type="online">Online</button>
+      </div>
+
+      <div class="map-container">
+        <div id="jobMap"></div>
+        
+        <div class="job-list-sidebar">
+          <h3>Việc làm theo khu vực</h3>
+          <div id="locationJobs">
+            <!-- Location items will be populated by JavaScript -->
+          </div>
+        </div>
+      </div>
+
+      <div class="location-stats">
+        <div class="stat-card">
+          <h4>An Giang</h4>
+          <div class="stat-number">15</div>
+          <p>công việc part-time</p>
+        </div>
+        <div class="stat-card">
+          <h4>Hà Nội</h4>
+          <div class="stat-number">28</div>
+          <p>công việc part-time</p>
+        </div>
+        <div class="stat-card">
+          <h4>TP HCM</h4>
+          <div class="stat-number">32</div>
+          <p>công việc part-time</p>
+        </div>
+        <div class="stat-card">
+          <h4>Đà Nẵng</h4>
+          <div class="stat-number">18</div>
+          <p>công việc part-time</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="container">
+      <p>&copy; Nhật Hào 2025.</p>
+      <div class="socials">
+        <a href="https://facebook.com/share/17PfiN1Xrk/" target="_blank">Facebook</a>
+        <a href="https://zalo.me/0788984741" target="_blank">Zalo</a>
+        <a href="mailto:vothinhuyqtm3k14@gmail.com">Email</a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <script>
+    // Sample job data with coordinates - Part-time jobs for students
+    const jobLocations = [
+      {
+        id: 1,
+        name: "An Giang",
+        lat: 10.5,
+        lng: 105.1667,
+        jobs: [
+          { 
+            title: "Cà phê khỏe", 
+            type: "Part-time", 
+            salary: "22K/H",
+            category: "pha chế",
+            description: "Pha chế cafe, phục vụ khách hàng",
+            requirements: "Nhanh nhẹn, giao tiếp tốt"
+          },
+          { 
+            title: "Gia sư Toán-Lý-Hóa", 
+            type: "Part-time", 
+            salary: "150k/Buổi",
+            category: "gia sư",
+            description: "Dạy kèm học sinh cấp 2, cấp 3",
+            requirements: "Kiến thức chuyên môn tốt"
+          },
+          { 
+            title: "Phát tờ rơi", 
+            type: "Part-time", 
+            salary: "50k-100k/Buổi",
+            category: "bán hàng",
+            description: "Phát tờ rơi quảng cáo",
+            requirements: "Chăm chỉ, nhiệt tình"
+          },
+          { 
+            title: "Bán hàng online", 
+            type: "Part-time", 
+            salary: "15-20k/H + Hoa hồng",
+            category: "online",
+            description: "Bán hàng qua Facebook, Zalo",
+            requirements: "Thành thạo MXH, giao tiếp tốt"
+          },
+          { 
+            title: "Nhân viên cửa hàng tiện lợi", 
+            type: "Part-time", 
+            salary: "18K/H",
+            category: "bán hàng",
+            description: "Thu ngân, xếp hàng hóa",
+            requirements: "Trung thực, cẩn thận"
+          }
+        ]
+      },
+      {
+        id: 2,
+        name: "Hà Nội",
+        lat: 21.0285,
+        lng: 105.8542,
+        jobs: [
+          { 
+            title: "Gia sư Tiếng Anh", 
+            type: "Part-time", 
+            salary: "200k/Buổi",
+            category: "gia sư",
+            description: "Dạy tiếng Anh giao tiếp",
+            requirements: "IELTS 6.5+, phát âm chuẩn"
+          },
+          { 
+            title: "Nhân viên Starbuks", 
+            type: "Part-time", 
+            salary: "25K/H",
+            category: "pha chế",
+            description: "Pha chế đồ uống, phục vụ",
+            requirements: "Ngoại hình ưa nhìn"
+          },
+          { 
+            title: "CTV Content", 
+            type: "Part-time", 
+            salary: "50-100k/Bài",
+            category: "online",
+            description: "Viết bài chuẩn SEO",
+            requirements: "Kỹ năng viết tốt"
+          },
+          { 
+            title: "PG/PT sự kiện", 
+            type: "Part-time", 
+            salary: "300-500k/Buổi",
+            category: "bán hàng",
+            description: "Tiếp thị tại các sự kiện",
+            requirements: "Tự tin, giao tiếp tốt"
+          },
+          { 
+            title: "Nhân viên bán sách", 
+            type: "Part-time", 
+            salary: "20K/H",
+            category: "bán hàng",
+            description: "Tư vấn, bán sách",
+            requirements: "Yêu sách, nhiệt tình"
+          }
+        ]
+      },
+      {
+        id: 3,
+        name: "TP HCM",
+        lat: 10.8231,
+        lng: 106.6297,
+        jobs: [
+          { 
+            title: "Gia sư Tin học", 
+            type: "Part-time", 
+            salary: "180k/Buổi",
+            category: "gia sư",
+            description: "Dạy Word, Excel, PowerPoint",
+            requirements: "Thành thạo tin học văn phòng"
+          },
+          { 
+            title: "Nhân viên The Coffee House", 
+            type: "Part-time", 
+            salary: "23K/H",
+            category: "pha chế",
+            description: "Pha chế, phục vụ khách",
+            requirements: "Nhanh nhẹn, thân thiện"
+          },
+          { 
+            title: "CTV thiết kế", 
+            type: "Part-time", 
+            salary: "100-200k/Ảnh",
+            category: "online",
+            description: "Thiết kế banner, ảnh quảng cáo",
+            requirements: "Biết Photoshop, Canva"
+          },
+          { 
+            title: "Nhân viên siêu thị", 
+            type: "Part-time", 
+            salary: "22K/H",
+            category: "bán hàng",
+            description: "Xếp hàng, hướng dẫn khách",
+            requirements: "Chăm chỉ, trung thực"
+          },
+          { 
+            title: "Gia sư Vẽ", 
+            type: "Part-time", 
+            salary: "250k/Buổi",
+            category: "gia sư",
+            description: "Dạy vẽ cho trẻ em",
+            requirements: "Có năng khiếu hội họa"
+          }
+        ]
+      },
+      {
+        id: 4,
+        name: "Đà Nẵng",
+        lat: 16.0544,
+        lng: 108.2022,
+        jobs: [
+          { 
+            title: "Gia sư Toán", 
+            type: "Part-time", 
+            salary: "120k/Buổi",
+            category: "gia sư",
+            description: "Dạy kèm Toán cấp 2, cấp 3",
+            requirements: "Kiến thức Toán vững"
+          },
+          { 
+            title: "Nhân viên Highlands", 
+            type: "Part-time", 
+            salary: "21K/H",
+            category: "pha chế",
+            description: "Pha chế trà sữa, cafe",
+            requirements: "Cẩn thận, tỉ mỉ"
+          },
+          { 
+            title: "CTV dịch thuật", 
+            type: "Part-time", 
+            salary: "80-150k/Trang",
+            category: "online",
+            description: "Dịch tài liệu Anh-Việt",
+            requirements: "Tiếng Anh tốt"
+          },
+          { 
+            title: "Nhân viên bán quần áo", 
+            type: "Part-time", 
+            salary: "18K/H + Hoa hồng",
+            category: "bán hàng",
+            description: "Tư vấn bán hàng thời trang",
+            requirements: "Có gu thời trang"
+          }
+        ]
+      }
+    ];
+
+    let map;
+    let markers = [];
+
+    // Initialize map
+    function initMap() {
+      // Create map centered on Vietnam
+      map = L.map('jobMap').setView([16.0, 108.0], 6);
+
+      // Add tile layer
+      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '© OpenStreetMap contributors'
+      }).addTo(map);
+
+      // Add markers for each location
+      jobLocations.forEach(location => {
+        const marker = L.marker([location.lat, location.lng])
+          .addTo(map)
+          .bindPopup(`
+            <div style="min-width: 250px;">
+              <h4 style="margin: 0 0 10px 0; color: #2563eb;">${location.name}</h4>
+              <p><strong>${location.jobs.length} công việc part-time</strong></p>
+              ${location.jobs.map(job => `
+                <div style="border-bottom: 1px solid #eee; padding: 8px 0;">
+                  <div><strong>${job.title}</strong></div>
+                  <div>💰 ${job.salary}</div>
+                  <div>📝 ${job.description}</div>
+                  <div style="font-size: 0.8rem; color: #666;">${job.requirements}</div>
+                </div>
+              `).join('')}
+            </div>
+          `);
+
+        markers.push({
+          marker: marker,
+          location: location
+        });
+      });
+
+      // Populate location list
+      populateLocationList();
+    }
+
+    // Populate location list in sidebar
+    function populateLocationList() {
+      const container = document.getElementById('locationJobs');
+      container.innerHTML = jobLocations.map(location => `
+        <div class="location-job-item" data-location="${location.name}">
+          <div class="location-name">${location.name}</div>
+          <div class="job-count">${location.jobs.length} công việc part-time</div>
+          <div class="job-list">
+            ${location.jobs.slice(0, 3).map(job => `
+              <div class="mini-job-item" data-job='${JSON.stringify(job).replace(/'/g, "&#39;")}'>
+                <strong>${job.title}</strong>
+                <span class="job-type-badge ${job.type.toLowerCase().replace(' ', '-')}-badge">${job.type}</span>
+                <span class="student-friendly-tag">Sinh viên</span>
+                <div style="font-size: 0.8rem; color: #666; margin-top: 3px;">
+                  💰 ${job.salary}
+                </div>
+              </div>
+            `).join('')}
+            ${location.jobs.length > 3 ? `<div style="color: #666; font-size: 0.8rem; text-align: center; margin-top: 8px;">+${location.jobs.length - 3} công việc khác</div>` : ''}
+          </div>
+        </div>
+      `).join('');
+
+      // Add click event to location items
+      document.querySelectorAll('.location-job-item').forEach(item => {
+        item.addEventListener('click', function() {
+          const locationName = this.getAttribute('data-location');
+          const location = jobLocations.find(loc => loc.name === locationName);
+          if (location) {
+            map.setView([location.lat, location.lng], 10);
+            
+            // Open popup for the first marker in this location
+            const marker = markers.find(m => m.location.name === locationName);
+            if (marker) {
+              marker.marker.openPopup();
+            }
+          }
+        });
+      });
+
+      // Add click event to mini job items
+      document.querySelectorAll('.mini-job-item').forEach(item => {
+        item.addEventListener('click', function(e) {
+          e.stopPropagation();
+          const jobData = JSON.parse(this.getAttribute('data-job').replace(/&#39;/g, "'"));
+          showJobDetails(jobData);
+        });
+      });
+    }
+
+    // Show job details in modal
+    function showJobDetails(job) {
+      const modal = document.createElement('div');
+      modal.style.cssText = `
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0,0,0,0.5);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 2000;
+      `;
+      
+      modal.innerHTML = `
+        <div style="background: white; padding: 30px; border-radius: 12px; max-width: 500px; width: 90%; max-height: 80vh; overflow-y: auto;">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+            <h3 style="margin: 0; color: #2563eb;">${job.title}</h3>
+            <button onclick="this.parentElement.parentElement.parentElement.remove()" style="background: none; border: none; font-size: 24px; cursor: pointer; color: #666;">&times;</button>
+          </div>
+          <div style="margin-bottom: 15px;">
+            <strong>💰 Mức lương:</strong> ${job.salary}
+          </div>
+          <div style="margin-bottom: 15px;">
+            <strong>📝 Mô tả công việc:</strong> ${job.description}
+          </div>
+          <div style="margin-bottom: 15px;">
+            <strong>✅ Yêu cầu:</strong> ${job.requirements}
+          </div>
+          <div style="margin-bottom: 20px;">
+            <span class="job-type-badge ${job.type.toLowerCase().replace(' ', '-')}-badge">${job.type}</span>
+            <span class="student-friendly-tag">Phù hợp sinh viên</span>
+          </div>
+          <button style="background: linear-gradient(135deg, #2563eb, #1d4ed8); color: white; border: none; padding: 12px 30px; border-radius: 6px; cursor: pointer; font-weight: 600; width: 100%;">
+            Ứng tuyển ngay
+          </button>
+        </div>
+      `;
+      
+      document.body.appendChild(modal);
+      
+      // Close modal when clicking outside
+      modal.addEventListener('click', function(e) {
+        if (e.target === modal) {
+          modal.remove();
+        }
+      });
+    }
+
+    // Filter controls
+    document.addEventListener('DOMContentLoaded', function() {
+      // Initialize map
+      initMap();
+
+      // Dropdown functionality
+      const dropdownToggle = document.querySelector('.dropdown-toggle');
+      const dropdownMenu = document.getElementById('contactDropdown');
+
+      dropdownToggle.addEventListener('click', function(e) {
+        e.preventDefault();
+        dropdownMenu.classList.toggle('show');
+      });
+
+      document.addEventListener('click', function(e) {
+        if (!e.target.closest('.dropdown')) {
+          dropdownMenu.classList.remove('show');
+        }
+      });
+
+      // Map control buttons
+      const controlBtns = document.querySelectorAll('.control-btn');
+      controlBtns.forEach(btn => {
+        btn.addEventListener('click', function() {
+          const filterType = this.getAttribute('data-type');
+          
+          // Update active button
+          controlBtns.forEach(b => b.classList.remove('active'));
+          this.classList.add('active');
+          
+          // Filter markers
+          filterMarkers(filterType);
+        });
+      });
+
+      // Add keyboard navigation
+      document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape') {
+          dropdownMenu.classList.remove('show');
+        }
+      });
+    });
+
+    // Filter markers based on type
+    function filterMarkers(filterType) {
+      if (filterType === 'all') {
+        // Show all markers
+        markers.forEach(({ marker }) => {
+          map.addLayer(marker);
+        });
+      } else {
+        // Hide all markers first
+        markers.forEach(({ marker }) => {
+          map.removeLayer(marker);
+        });
+        
+        // Show only markers that match filter
+        markers.forEach(({ marker, location }) => {
+          const hasMatchingJob = location.jobs.some(job => 
+            job.type.toLowerCase().includes(filterType) || 
+            location.name.toLowerCase().includes(filterType) ||
+            job.category.toLowerCase().includes(filterType) ||
+            job.title.toLowerCase().includes(filterType)
+          );
+          
+          if (hasMatchingJob) {
+            map.addLayer(marker);
+          }
+        });
+      }
+    }
+  </script>
+</body>
+</html>

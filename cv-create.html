@@ -1,0 +1,864 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tạo CV - Bước 1: Thông tin cá nhân</title>
+    <link rel="stylesheet" href="./style/cv-create.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* CSS cơ bản để đảm bảo giao diện hoạt động */
+        body {
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f5f5f5;
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .header {
+            background-color: #fff;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            padding: 15px 0;
+        }
+        
+        .header .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo a {
+            font-weight: bold;
+            font-size: 24px;
+            text-decoration: none;
+            color: #333;
+        }
+        
+        .nav {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+        
+        .nav a {
+            text-decoration: none;
+            color: #666;
+            font-weight: 500;
+        }
+        
+        .nav a.active {
+            color: #007bff;
+        }
+        
+        .progress-steps {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 40px;
+        }
+        
+        .step {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            flex: 1;
+        }
+        
+        .step-number {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: #e9ecef;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+        
+        .step.active .step-number {
+            background-color: #007bff;
+            color: white;
+        }
+        
+        .step-label {
+            font-size: 14px;
+            text-align: center;
+        }
+        
+        .step-content {
+            display: none;
+            background-color: white;
+            border-radius: 8px;
+            padding: 30px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .step-content.active {
+            display: block;
+        }
+        
+        .step-header {
+            margin-bottom: 30px;
+        }
+        
+        .step-header h1 {
+            margin: 0 0 10px;
+            font-size: 24px;
+        }
+        
+        .step-header p {
+            margin: 0;
+            color: #666;
+        }
+        
+        .form-section {
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .form-section h3 {
+            margin-bottom: 15px;
+            font-size: 18px;
+        }
+        
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+        
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .form-group.full-width {
+            grid-column: 1 / -1;
+        }
+        
+        label {
+            margin-bottom: 5px;
+            font-weight: 500;
+        }
+        
+        input, select, textarea {
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-family: inherit;
+        }
+        
+        .char-count {
+            text-align: right;
+            font-size: 12px;
+            color: #666;
+            margin-top: 5px;
+        }
+        
+        .form-actions {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 30px;
+        }
+        
+        .btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: 500;
+            font-family: inherit;
+        }
+        
+        .btn-primary {
+            background-color: #007bff;
+            color: white;
+        }
+        
+        .btn-secondary {
+            background-color: #6c757d;
+            color: white;
+        }
+        
+        .btn-success {
+            background-color: #28a745;
+            color: white;
+        }
+        
+        .btn-outline {
+            background-color: transparent;
+            border: 1px solid #007bff;
+            color: #007bff;
+        }
+        
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        
+        .education-item, .experience-item {
+            position: relative;
+            padding: 15px;
+            border: 1px solid #eee;
+            border-radius: 4px;
+            margin-bottom: 15px;
+        }
+        
+        .btn-remove {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: none;
+            border: none;
+            font-size: 20px;
+            cursor: pointer;
+            color: #dc3545;
+        }
+        
+        .skills-input {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+        
+        .skills-input input {
+            flex: 1;
+        }
+        
+        .skills-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+        
+        .skill-tag {
+            background-color: #e9ecef;
+            padding: 5px 10px;
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        .skill-tag button {
+            background: none;
+            border: none;
+            cursor: pointer;
+            color: #666;
+        }
+        
+        .skill-suggestion {
+            color: #007bff;
+            cursor: pointer;
+            text-decoration: underline;
+        }
+        
+        .template-selection {
+            display: flex;
+            gap: 20px;
+        }
+        
+        .template-option {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            cursor: pointer;
+        }
+        
+        .template-preview {
+            width: 120px;
+            height: 160px;
+            border: 2px solid #ddd;
+            border-radius: 4px;
+            margin-bottom: 10px;
+        }
+        
+        .template-option.active .template-preview {
+            border-color: #007bff;
+        }
+        
+        .modern-template {
+            background: linear-gradient(135deg, #007bff 0%, #0056b3 100%);
+        }
+        
+        .professional-template {
+            background: linear-gradient(135deg, #28a745 0%, #1e7e34 100%);
+        }
+        
+        .creative-template {
+            background: linear-gradient(135deg, #6f42c1 0%, #4a2c8a 100%);
+        }
+        
+        .cv-preview {
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            padding: 20px;
+            min-height: 200px;
+            background-color: white;
+        }
+    </style>
+</head>
+<body>
+    <!-- HEADER -->
+    <header class="header">
+        <div class="container">
+            <div class="logo"><a href="index.html">Nhật Hào</a></div>
+            <nav class="nav">
+                <a href="index.html">Trang chủ</a>
+                <a href="work.html">Việc làm</a>
+                <a href="cv.html" class="active">CV</a>
+                <a href="map.html">Map</a>
+                <div class="login-section" id="loginSection">
+                    <!-- Nội dung sẽ được cập nhật bằng JavaScript -->
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- CV CREATION PROCESS -->
+    <section class="cv-creation">
+        <div class="container">
+            <!-- Progress Steps -->
+            <div class="progress-steps">
+                <div class="step active" data-step="1">
+                    <div class="step-number">1</div>
+                    <div class="step-label">Thông tin cá nhân</div>
+                </div>
+                <div class="step" data-step="2">
+                    <div class="step-number">2</div>
+                    <div class="step-label">Học vấn & Kinh nghiệm</div>
+                </div>
+                <div class="step" data-step="3">
+                    <div class="step-number">3</div>
+                    <div class="step-label">Kỹ năng & Hoàn tất</div>
+                </div>
+            </div>
+
+            <!-- Step 1: Personal Information -->
+            <div class="step-content active" id="step1">
+                <div class="step-header">
+                    <h1>Thông tin cá nhân</h1>
+                    <p>Hãy cung cấp thông tin cơ bản của bạn</p>
+                </div>
+
+                <form class="cv-form" id="personalInfoForm">
+                    <div class="form-section">
+                        <h3>Thông tin cơ bản</h3>
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label for="fullName">Họ và tên *</label>
+                                <input type="text" id="fullName" name="fullName" required placeholder="Nguyễn Văn A">
+                            </div>
+                            <div class="form-group">
+                                <label for="jobTitle">Vị trí mong muốn *</label>
+                                <input type="text" id="jobTitle" name="jobTitle" required placeholder="Nhân viên bán hàng">
+                            </div>
+                            <div class="form-group">
+                                <label for="email">Email *</label>
+                                <input type="email" id="email" name="email" required placeholder="nguyenvana@email.com">
+                            </div>
+                            <div class="form-group">
+                                <label for="phone">Số điện thoại *</label>
+                                <input type="tel" id="phone" name="phone" required placeholder="0912345678">
+                            </div>
+                            <div class="form-group">
+                                <label for="birthday">Ngày sinh</label>
+                                <input type="date" id="birthday" name="birthday">
+                            </div>
+                            <div class="form-group">
+                                <label for="gender">Giới tính</label>
+                                <select id="gender" name="gender">
+                                    <option value="">Chọn giới tính</option>
+                                    <option value="male">Nam</option>
+                                    <option value="female">Nữ</option>
+                                    <option value="other">Khác</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-section">
+                        <h3>Địa chỉ</h3>
+                        <div class="form-grid">
+                            <div class="form-group full-width">
+                                <label for="address">Địa chỉ</label>
+                                <input type="text" id="address" name="address" placeholder="Số nhà, đường, phường/xã">
+                            </div>
+                            <div class="form-group">
+                                <label for="city">Thành phố/Tỉnh</label>
+                                <input type="text" id="city" name="city" placeholder="An Giang">
+                            </div>
+                            <div class="form-group">
+                                <label for="district">Quận/Huyện</label>
+                                <input type="text" id="district" name="district" placeholder="TP. Long Xuyên">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-section">
+                        <h3>Giới thiệu bản thân</h3>
+                        <div class="form-group full-width">
+                            <label for="summary">Mô tả bản thân *</label>
+                            <textarea id="summary" name="summary" required placeholder="Mô tả ngắn gọn về bản thân, điểm mạnh và mục tiêu nghề nghiệp..." rows="4"></textarea>
+                            <div class="char-count"><span id="summaryCount">0</span>/500 ký tự</div>
+                        </div>
+                    </div>
+
+                    <div class="form-actions">
+                        <button type="button" class="btn btn-secondary" onclick="window.location.href='work.html'">Hủy bỏ</button>
+                        <button type="button" class="btn btn-primary" onclick="nextStep(2)">Tiếp theo</button>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Step 2: Education & Experience -->
+            <div class="step-content" id="step2">
+                <div class="step-header">
+                    <h1>Học vấn & Kinh nghiệm</h1>
+                    <p>Thêm thông tin về trình độ học vấn và kinh nghiệm làm việc</p>
+                </div>
+
+                <form class="cv-form" id="educationExperienceForm">
+                    <!-- Education Section -->
+                    <div class="form-section">
+                        <div class="section-header">
+                            <h3>Học vấn</h3>
+                            <button type="button" class="btn btn-outline" onclick="addEducation()">+ Thêm học vấn</button>
+                        </div>
+                        <div id="educationList">
+                            <div class="education-item">
+                                <div class="form-grid">
+                                    <div class="form-group">
+                                        <label>Trường học *</label>
+                                        <input type="text" name="school[]" required placeholder="Trường Cao đẳng Nghề Kiên Giang">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Bằng cấp *</label>
+                                        <input type="text" name="degree[]" required placeholder="Cao đẳng">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Chuyên ngành *</label>
+                                        <input type="text" name="major[]" required placeholder="Quản trị mạng">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Thời gian *</label>
+                                        <input type="text" name="educationPeriod[]" required placeholder="2021 - 2024">
+                                    </div>
+                                    <div class="form-group full-width">
+                                        <label>Mô tả</label>
+                                        <textarea name="educationDescription[]" placeholder="Mô tả quá trình học tập, thành tích..." rows="2"></textarea>
+                                    </div>
+                                </div>
+                                <button type="button" class="btn-remove" onclick="removeEducation(this)">×</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Experience Section -->
+                    <div class="form-section">
+                        <div class="section-header">
+                            <h3>Kinh nghiệm làm việc</h3>
+                            <button type="button" class="btn btn-outline" onclick="addExperience()">+ Thêm kinh nghiệm</button>
+                        </div>
+                        <div id="experienceList">
+                            <div class="experience-item">
+                                <div class="form-grid">
+                                    <div class="form-group">
+                                        <label>Công ty</label>
+                                        <input type="text" name="company[]" placeholder="Tên công ty">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Vị trí</label>
+                                        <input type="text" name="position[]" placeholder="Vị trí công việc">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Thời gian</label>
+                                        <input type="text" name="workPeriod[]" placeholder="2023 - Hiện tại">
+                                    </div>
+                                    <div class="form-group full-width">
+                                        <label>Mô tả công việc</label>
+                                        <textarea name="workDescription[]" placeholder="Mô tả công việc, trách nhiệm, thành tích..." rows="3"></textarea>
+                                    </div>
+                                </div>
+                                <button type="button" class="btn-remove" onclick="removeExperience(this)">×</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-actions">
+                        <button type="button" class="btn btn-secondary" onclick="prevStep(1)">Quay lại</button>
+                        <button type="button" class="btn btn-primary" onclick="nextStep(3)">Tiếp theo</button>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Step 3: Skills & Finalize -->
+            <div class="step-content" id="step3">
+                <div class="step-header">
+                    <h1>Kỹ năng & Hoàn tất</h1>
+                    <p>Thêm kỹ năng và xem trước CV của bạn</p>
+                </div>
+
+                <form class="cv-form" id="skillsForm">
+                    <!-- Skills Section -->
+                    <div class="form-section">
+                        <h3>Kỹ năng</h3>
+                        <div class="skills-input">
+                            <input type="text" id="skillInput" placeholder="Nhập kỹ năng (ví dụ: Giao tiếp, Excel, Photoshop...)">
+                            <button type="button" class="btn btn-outline" onclick="addSkill()">Thêm</button>
+                        </div>
+                        <div class="skills-tags" id="skillsList">
+                            <!-- Skills will be added here -->
+                        </div>
+                        <div class="skills-suggestions">
+                            <p>Gợi ý: 
+                                <span class="skill-suggestion" onclick="addSuggestedSkill('Giao tiếp')">Giao tiếp</span>,
+                                <span class="skill-suggestion" onclick="addSuggestedSkill('Làm việc nhóm')">Làm việc nhóm</span>,
+                                <span class="skill-suggestion" onclick="addSuggestedSkill('Tin học văn phòng')">Tin học văn phòng</span>,
+                                <span class="skill-suggestion" onclick="addSuggestedSkill('Tiếng Anh')">Tiếng Anh</span>
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- CV Preview -->
+                    <div class="form-section">
+                        <h3>Xem trước CV</h3>
+                        <div class="cv-preview" id="cvPreview">
+                            <!-- CV preview will be generated here -->
+                        </div>
+                    </div>
+
+                    <!-- Template Selection -->
+                    <div class="form-section">
+                        <h3>Chọn mẫu CV</h3>
+                        <div class="template-selection">
+                            <div class="template-option active" data-template="modern">
+                                <div class="template-preview modern-template"></div>
+                                <span>Hiện đại</span>
+                            </div>
+                            <div class="template-option" data-template="professional">
+                                <div class="template-preview professional-template"></div>
+                                <span>Chuyên nghiệp</span>
+                            </div>
+                            <div class="template-option" data-template="creative">
+                                <div class="template-preview creative-template"></div>
+                                <span>Sáng tạo</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-actions">
+                        <button type="button" class="btn btn-secondary" onclick="prevStep(2)">Quay lại</button>
+                        <button type="button" class="btn btn-success" onclick="saveCV()">Lưu CV</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        // Biến lưu trữ dữ liệu CV
+        let cvData = {
+            personalInfo: {},
+            education: [],
+            experience: [],
+            skills: [],
+            template: 'modern'
+        };
+
+        // Hàm chuyển bước
+        function nextStep(step) {
+            // Ẩn tất cả các bước
+            document.querySelectorAll('.step-content').forEach(content => {
+                content.classList.remove('active');
+            });
+            
+            // Hiển thị bước được chọn
+            document.getElementById(`step${step}`).classList.add('active');
+            
+            // Cập nhật progress steps
+            document.querySelectorAll('.step').forEach(stepEl => {
+                stepEl.classList.remove('active');
+                if (parseInt(stepEl.dataset.step) <= step) {
+                    stepEl.classList.add('active');
+                }
+            });
+            
+            // Nếu là bước 3, cập nhật preview
+            if (step === 3) {
+                updateCVPreview();
+            }
+        }
+
+        function prevStep(step) {
+            nextStep(step);
+        }
+
+        // Hàm thêm học vấn
+        function addEducation() {
+            const educationList = document.getElementById('educationList');
+            const newEducation = document.createElement('div');
+            newEducation.className = 'education-item';
+            newEducation.innerHTML = `
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label>Trường học *</label>
+                        <input type="text" name="school[]" required placeholder="Trường Cao đẳng Nghề Kiên Giang">
+                    </div>
+                    <div class="form-group">
+                        <label>Bằng cấp *</label>
+                        <input type="text" name="degree[]" required placeholder="Cao đẳng">
+                    </div>
+                    <div class="form-group">
+                        <label>Chuyên ngành *</label>
+                        <input type="text" name="major[]" required placeholder="Quản trị mạng">
+                    </div>
+                    <div class="form-group">
+                        <label>Thời gian *</label>
+                        <input type="text" name="educationPeriod[]" required placeholder="2021 - 2024">
+                    </div>
+                    <div class="form-group full-width">
+                        <label>Mô tả</label>
+                        <textarea name="educationDescription[]" placeholder="Mô tả quá trình học tập, thành tích..." rows="2"></textarea>
+                    </div>
+                </div>
+                <button type="button" class="btn-remove" onclick="removeEducation(this)">×</button>
+            `;
+            educationList.appendChild(newEducation);
+        }
+
+        // Hàm xóa học vấn
+        function removeEducation(button) {
+            button.parentElement.remove();
+        }
+
+        // Hàm thêm kinh nghiệm
+        function addExperience() {
+            const experienceList = document.getElementById('experienceList');
+            const newExperience = document.createElement('div');
+            newExperience.className = 'experience-item';
+            newExperience.innerHTML = `
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label>Công ty</label>
+                        <input type="text" name="company[]" placeholder="Tên công ty">
+                    </div>
+                    <div class="form-group">
+                        <label>Vị trí</label>
+                        <input type="text" name="position[]" placeholder="Vị trí công việc">
+                    </div>
+                    <div class="form-group">
+                        <label>Thời gian</label>
+                        <input type="text" name="workPeriod[]" placeholder="2023 - Hiện tại">
+                    </div>
+                    <div class="form-group full-width">
+                        <label>Mô tả công việc</label>
+                        <textarea name="workDescription[]" placeholder="Mô tả công việc, trách nhiệm, thành tích..." rows="3"></textarea>
+                    </div>
+                </div>
+                <button type="button" class="btn-remove" onclick="removeExperience(this)">×</button>
+            `;
+            experienceList.appendChild(newExperience);
+        }
+
+        // Hàm xóa kinh nghiệm
+        function removeExperience(button) {
+            button.parentElement.remove();
+        }
+
+        // Hàm thêm kỹ năng
+        function addSkill() {
+            const skillInput = document.getElementById('skillInput');
+            const skill = skillInput.value.trim();
+            
+            if (skill && !cvData.skills.includes(skill)) {
+                cvData.skills.push(skill);
+                updateSkillsList();
+                skillInput.value = '';
+            }
+        }
+
+        // Hàm thêm kỹ năng từ gợi ý
+        function addSuggestedSkill(skill) {
+            if (!cvData.skills.includes(skill)) {
+                cvData.skills.push(skill);
+                updateSkillsList();
+            }
+        }
+
+        // Hàm cập nhật danh sách kỹ năng hiển thị
+        function updateSkillsList() {
+            const skillsList = document.getElementById('skillsList');
+            skillsList.innerHTML = '';
+            
+            cvData.skills.forEach(skill => {
+                const skillTag = document.createElement('div');
+                skillTag.className = 'skill-tag';
+                skillTag.innerHTML = `
+                    ${skill}
+                    <button type="button" onclick="removeSkill('${skill}')">×</button>
+                `;
+                skillsList.appendChild(skillTag);
+            });
+        }
+
+        // Hàm xóa kỹ năng
+        function removeSkill(skill) {
+            cvData.skills = cvData.skills.filter(s => s !== skill);
+            updateSkillsList();
+        }
+
+        // Hàm cập nhật preview CV
+        function updateCVPreview() {
+            const cvPreview = document.getElementById('cvPreview');
+            
+            // Thu thập dữ liệu từ form
+            collectFormData();
+            
+            // Tạo nội dung preview
+            let previewHTML = `
+                <h2>${cvData.personalInfo.fullName || 'Họ và tên'}</h2>
+                <p><strong>${cvData.personalInfo.jobTitle || 'Vị trí công việc'}</strong></p>
+                <p>${cvData.personalInfo.email || 'Email'} | ${cvData.personalInfo.phone || 'Số điện thoại'}</p>
+                <p>${cvData.personalInfo.address || 'Địa chỉ'}</p>
+                
+                <h3>Giới thiệu</h3>
+                <p>${cvData.personalInfo.summary || 'Mô tả bản thân'}</p>
+                
+                <h3>Học vấn</h3>
+            `;
+            
+            cvData.education.forEach(edu => {
+                previewHTML += `
+                    <p><strong>${edu.school}</strong> - ${edu.degree}</p>
+                    <p>${edu.major} | ${edu.period}</p>
+                    <p>${edu.description}</p>
+                `;
+            });
+            
+            previewHTML += `<h3>Kinh nghiệm làm việc</h3>`;
+            
+            cvData.experience.forEach(exp => {
+                previewHTML += `
+                    <p><strong>${exp.company}</strong> - ${exp.position}</p>
+                    <p>${exp.period}</p>
+                    <p>${exp.description}</p>
+                `;
+            });
+            
+            previewHTML += `<h3>Kỹ năng</h3><p>${cvData.skills.join(', ')}</p>`;
+            
+            cvPreview.innerHTML = previewHTML;
+        }
+
+        // Hàm thu thập dữ liệu từ form
+        function collectFormData() {
+            // Thu thập thông tin cá nhân
+            cvData.personalInfo = {
+                fullName: document.getElementById('fullName').value,
+                jobTitle: document.getElementById('jobTitle').value,
+                email: document.getElementById('email').value,
+                phone: document.getElementById('phone').value,
+                birthday: document.getElementById('birthday').value,
+                gender: document.getElementById('gender').value,
+                address: document.getElementById('address').value,
+                city: document.getElementById('city').value,
+                district: document.getElementById('district').value,
+                summary: document.getElementById('summary').value
+            };
+            
+            // Thu thập thông tin học vấn
+            cvData.education = [];
+            const schoolInputs = document.getElementsByName('school[]');
+            const degreeInputs = document.getElementsByName('degree[]');
+            const majorInputs = document.getElementsByName('major[]');
+            const educationPeriodInputs = document.getElementsByName('educationPeriod[]');
+            const educationDescriptionInputs = document.getElementsByName('educationDescription[]');
+            
+            for (let i = 0; i < schoolInputs.length; i++) {
+                if (schoolInputs[i].value.trim() !== '') {
+                    cvData.education.push({
+                        school: schoolInputs[i].value,
+                        degree: degreeInputs[i].value,
+                        major: majorInputs[i].value,
+                        period: educationPeriodInputs[i].value,
+                        description: educationDescriptionInputs[i].value
+                    });
+                }
+            }
+            
+            // Thu thập thông tin kinh nghiệm
+            cvData.experience = [];
+            const companyInputs = document.getElementsByName('company[]');
+            const positionInputs = document.getElementsByName('position[]');
+            const workPeriodInputs = document.getElementsByName('workPeriod[]');
+            const workDescriptionInputs = document.getElementsByName('workDescription[]');
+            
+            for (let i = 0; i < companyInputs.length; i++) {
+                if (companyInputs[i].value.trim() !== '') {
+                    cvData.experience.push({
+                        company: companyInputs[i].value,
+                        position: positionInputs[i].value,
+                        period: workPeriodInputs[i].value,
+                        description: workDescriptionInputs[i].value
+                    });
+                }
+            }
+        }
+
+        // Hàm lưu CV
+        function saveCV() {
+            collectFormData();
+            
+            // Lưu vào localStorage
+            localStorage.setItem('cvData', JSON.stringify(cvData));
+            
+            // Hiển thị thông báo
+            alert('CV của bạn đã được lưu thành công!');
+            
+            // Chuyển hướng đến trang CV
+            window.location.href = 'cv.html';
+        }
+
+        // Xử lý sự kiện khi trang được tải
+        document.addEventListener('DOMContentLoaded', function() {
+            // Đếm ký tự trong mô tả bản thân
+            const summaryTextarea = document.getElementById('summary');
+            const summaryCount = document.getElementById('summaryCount');
+            
+            summaryTextarea.addEventListener('input', function() {
+                summaryCount.textContent = this.value.length;
+            });
+            
+            // Xử lý chọn template
+            document.querySelectorAll('.template-option').forEach(option => {
+                option.addEventListener('click', function() {
+                    document.querySelectorAll('.template-option').forEach(opt => {
+                        opt.classList.remove('active');
+                    });
+                    this.classList.add('active');
+                    cvData.template = this.dataset.template;
+                });
+            });
+            
+            // Cho phép thêm kỹ năng bằng phím Enter
+            document.getElementById('skillInput').addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    e.preventDefault();
+                    addSkill();
+                }
+            });
+        });
+    </script>
+</body>
+</html>

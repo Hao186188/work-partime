@@ -1,0 +1,825 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Việc Làm Mới Nhất - Tuyển Dụng Hiệu Quả</title>
+    <link rel="stylesheet" href="./style/vieclamnew.css">
+    <!-- <link rel="stylesheet" href="./style/work.css"> -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- HEADER -->
+    <header class="header">
+        <div class="container">
+            <div class="logo"><a href="index.html" style="text-decoration: none; color: inherit;">Nhật Hào</a></div>
+            <nav class="nav">
+                <a href="index.html">Trang chủ</a>
+                
+                <!-- DROPDOWN TÌM VIỆC LÀM -->
+                <div class="dropdown" id="jobDropdown">
+                    <a href="work.html" class="dropdown-toggle active">Tìm việc làm</a>
+                    <div class="dropdown-menu">
+                        <div class="dropdown-section">
+                            <h4>VIỆC LÀM</h4>
+                            <a href="work.html">Việc làm mới nhất</a>
+                            <a href="work-by-industry.html">Việc làm theo ngành nghề</a>
+                            <a href="internship.html">Việc làm thực tập</a>
+                        </div>
+                        
+                        <div class="dropdown-section">
+                            <h4>VIỆC LÀM PHỔ BIẾN</h4>
+                            <a href="online-jobs.html">Việc làm online</a>
+                            <a href="part-time.html">Việc làm part time</a>
+                            <a href="video-editor.html">Tuyển video editor</a>
+                        </div>
+
+                        <div class="dropdown-section">
+                            <h4>KINH NGHIỆM</h4>
+                            <a href="no-experience.html">Không yêu cầu</a>
+                            <a href="under-1year.html">Dưới 1 năm</a>
+                            <a href="1-3years.html">1-3 năm</a>
+                        </div>
+                    </div>
+                </div>
+
+                <a href="cv.html">CV</a>
+                <a href="map.html">Map</a>
+                <a href="account.html">Đăng ký/Đăng nhập</a>
+                
+                <div class="dropdown">
+                    <a href="#" class="dropdown-toggle">Liên hệ</a>
+                    <div class="dropdown-menu" id="contactDropdown">
+                        <a href="https://zalo.me/0788984741" class="dropdown-item" target="_blank">
+                            <span class="zalo-icon">Z</span>
+                            Zalo: 0788984741
+                        </a>
+                        <a href="https://facebook.com/share/17PfiN1Xrk/" class="dropdown-item" target="_blank">
+                            <span class="facebook-icon">f</span>
+                            Facebook: Như Ý
+                        </a>
+                    </div>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- SEARCH SECTION -->
+    <section class="search-section">
+        <div class="container">
+            <div class="search-header">
+                <h1>Việc Làm Mới Nhất</h1>
+                <p>Cập nhật những công việc mới nhất từ các nhà tuyển dụng uy tín</p>
+            </div>
+            
+            <div class="search-box">
+                <div class="search-input-group">
+                    <input type="text" class="search-input" placeholder="Tìm kiếm việc làm, công ty, kỹ năng...">
+                    <button class="search-btn">
+                        <span class="search-icon">🔍</span>
+                        Tìm kiếm
+                    </button>
+                </div>
+                
+                <div class="advanced-filters">
+                    <div class="filter-group">
+                        <label>Ngành nghề:</label>
+                        <select class="filter-select">
+                            <option value="">Tất cả ngành nghề</option>
+                            <option value="it">Công nghệ thông tin</option>
+                            <option value="marketing">Điện</option>
+                            <option value="sales">Kinh doanh</option>
+                            <option value="design">Thiết kế</option>
+                            <option value="cafe">Cà phê</option>
+                            <option value="studio">Studio</option>
+                            <option value="education">Gia sư</option>
+                            <option value="service">Cộng tác viên</option>
+                            <option value="handmade">Handmade</option>
+                        </select>
+                    </div>
+                    
+                    <div class="filter-group">
+                        <label>Địa điểm:</label>
+                        <select class="filter-select">
+                            <option value="">Tất cả địa điểm</option>
+                            <option value="hanoi">Hà Nội</option>
+                            <option value="hcm">TP.HCM</option>
+                            <option value="danang">Đà Nẵng</option>
+                            <option value="other">Tỉnh thành khác</option>
+                        </select>
+                    </div>
+                    
+                    <div class="filter-group">
+                        <label>Kinh nghiệm:</label>
+                        <select class="filter-select">
+                            <option value="">Kinh nghiệm</option>
+                            <option value="5-10">chưa có kinh nghiệm</option>
+                            <option value="10-15">dưới 6 tháng</option>
+                            <option value="15-20">1 năm</option>
+                            <option value="20+">1 năm trở lên</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- JOB LISTINGS -->
+    <section class="job-listings-section">
+        <div class="container">
+            <div class="section-header">
+                <h2>🔥 Việc Làm Mới Nhất</h2>
+                <div class="sort-options">
+                    <span>Sắp xếp:</span>
+                    <select class="sort-select">
+                        <option value="newest">Mới nhất</option>
+                        <option value="relevant">Phù hợp nhất</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="jobs-container">
+                <div class="jobs-grid" id="jobsGrid">
+                    <!-- Job cards will be populated by JavaScript -->
+                </div>
+                
+                <div class="load-more-container">
+                    <button class="load-more-btn" id="loadMoreBtn">Tải thêm việc làm</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>Về Chúng Tôi</h4>
+                    <p>Nền tảng kết nối nhà tuyển dụng và ứng viên hàng đầu Việt Nam</p>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>Liên Kết Nhanh</h4>
+                    <ul>
+                        <li><a href="work.html">Việc làm mới nhất</a></li>
+                        <li><a href="work-by-industry.html">Việc làm theo ngành</a></li>
+                        <li><a href="cv.html">Tạo CV</a></li>
+                        <li><a href="company.html">Công ty</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>Hỗ Trợ</h4>
+                    <ul>
+                        <li><a href="help.html">Trung tâm trợ giúp</a></li>
+                        <li><a href="contact.html">Liên hệ</a></li>
+                        <li><a href="privacy.html">Chính sách bảo mật</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>Kết Nối</h4>
+                    <div class="social-links">
+                        <a href="#" class="social-link">Facebook</a>
+                        <a href="#" class="social-link">LinkedIn</a>
+                        <a href="#" class="social-link">YouTube</a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2024 Nhật Hào. Tất cả quyền được bảo lưu.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="./script/script.js"></script>
+    <script src="./script/work.js"></script>
+    <script>
+// DỮ LIỆU VIỆC LÀM THỰC TẾ
+const jobsData = [
+    {
+        id: 1,
+        title: "Nhân viên pha chế cà phê",
+        company: "Cà phê khỏe",
+        location: "Văn Lang Street, An Giang",
+        type: "Part-time",
+        salary: "22,000đ/giờ",
+        tags: ["Pha chế", "Part-time", "Không yêu cầu kinh nghiệm"],
+        time: "1 ngày trước",
+        featured: true,
+        urgent: true,
+        new: true,
+        description: "Tuyển nhân viên pha chế làm việc part-time. Không yêu cầu kinh nghiệm, sẽ được đào tạo.",
+        timestamp: new Date('2024-01-15').getTime(),
+        relevance: 95
+    },
+    {
+        id: 2,
+        title: "Gia sư tại nhà",
+        company: "Trung tâm gia sư An Giang",
+        location: "An Giang",
+        type: "Part-time",
+        salary: "150,000đ/buổi",
+        tags: ["Dạy kèm", "Part-time", "Sinh viên"],
+        time: "2 ngày trước",
+        featured: false,
+        urgent: false,
+        new: true,
+        description: "Tuyển gia sư dạy Toán, Lý, Hóa cho học sinh cấp 2,3. Ưu tiên sinh viên sư phạm.",
+        timestamp: new Date('2024-01-14').getTime(),
+        relevance: 88
+    },
+    {
+        id: 3,
+        title: "Nhân viên phát tờ rơi",
+        company: "Công ty quảng cáo An Giang",
+        location: "An Giang",
+        type: "Part-time",
+        salary: "50,000đ - 100,000đ/buổi",
+        tags: ["Phát tờ rơi", "Part-time", "Linh hoạt"],
+        time: "3 ngày trước",
+        featured: false,
+        urgent: true,
+        new: true,
+        description: "Tuyển nhân viên phát tờ rơi tại các khu vực trung tâm. Thời gian linh hoạt.",
+        timestamp: new Date('2024-01-13').getTime(),
+        relevance: 76
+    },
+    {
+        id: 4,
+        title: "Người mẫu ảnh/Tạo dáng",
+        company: "Studio ảnh An Giang",
+        location: "An Giang",
+        type: "Part-time",
+        salary: "160,000đ - 400,000đ/buổi",
+        tags: ["Người mẫu", "Part-time", "Tạo dáng"],
+        time: "1 ngày trước",
+        featured: true,
+        urgent: false,
+        new: true,
+        description: "Tuyển người mẫu ảnh cho studio. Chiều cao từ 1m60, tự tin trước ống kính.",
+        timestamp: new Date('2024-01-15').getTime(),
+        relevance: 82
+    },
+    {
+        id: 5,
+        title: "Cộng tác viên viết bài",
+        company: "Tòa soạn báo An Giang",
+        location: "Online/An Giang",
+        type: "Part-time",
+        salary: "10,000đ - 100,000đ/bài",
+        tags: ["Viết bài", "Online", "Content"],
+        time: "4 ngày trước",
+        featured: false,
+        urgent: false,
+        new: true,
+        description: "Tuyển CTV viết bài về đời sống, văn hóa An Giang. Làm việc online được.",
+        timestamp: new Date('2024-01-12').getTime(),
+        relevance: 91
+    },
+    {
+        id: 6,
+        title: "Bán đồ handmade",
+        company: "Cửa hàng handmade An Giang",
+        location: "An Giang",
+        type: "Part-time",
+        salary: "50,000đ - 300,000đ/sản phẩm",
+        tags: ["Handmade", "Bán hàng", "Sáng tạo"],
+        time: "5 ngày trước",
+        featured: true,
+        urgent: false,
+        new: true,
+        description: "Tuyển người làm đồ handmade và bán sản phẩm. Có hướng dẫn cho người mới.",
+        timestamp: new Date('2024-01-11').getTime(),
+        relevance: 79
+    },
+    {
+        id: 7,
+        title: "Nhân viên phục vụ tiệc cưới",
+        company: "Nhà hàng tiệc cưới An Giang",
+        location: "An Giang",
+        type: "Part-time",
+        salary: "90,000đ/buổi",
+        tags: ["Phục vụ", "Part-time", "Tiệc cưới"],
+        time: "2 ngày trước",
+        featured: false,
+        urgent: true,
+        new: true,
+        description: "Tuyển nhân viên phục vụ tiệc cưới cuối tuần. Có thể làm theo ca linh hoạt.",
+        timestamp: new Date('2024-01-14').getTime(),
+        relevance: 85
+    },
+    {
+        id: 8,
+        title: "Nhân viên bán hàng siêu thị",
+        company: "Siêu thị Co.opmart An Giang",
+        location: "An Giang",
+        type: "Part-time",
+        salary: "25,000đ/giờ",
+        tags: ["Bán hàng", "Siêu thị", "Part-time"],
+        time: "6 ngày trước",
+        featured: false,
+        urgent: false,
+        new: false,
+        description: "Tuyển nhân viên bán hàng part-time tại siêu thị. Ca sáng/chiều/tối linh hoạt.",
+        timestamp: new Date('2024-01-10').getTime(),
+        relevance: 73
+    },
+    {
+        id: 9,
+        title: "Shipper part-time",
+        company: "Công ty giao hàng nhanh An Giang",
+        location: "An Giang",
+        type: "Part-time",
+        salary: "15,000đ - 30,000đ/đơn",
+        tags: ["Giao hàng", "Shipper", "Part-time"],
+        time: "1 ngày trước",
+        featured: false,
+        urgent: true,
+        new: true,
+        description: "Tuyển shipper part-time giao hàng trong TP. Có xe máy, bằng lái.",
+        timestamp: new Date('2024-01-15').getTime(),
+        relevance: 89
+    },
+    {
+        id: 10,
+        title: "Nhân viên tạp vụ văn phòng",
+        company: "Công ty dịch vụ vệ sinh An Giang",
+        location: "An Giang",
+        type: "Part-time",
+        salary: "20,000đ/giờ",
+        tags: ["Tạp vụ", "Vệ sinh", "Part-time"],
+        time: "3 ngày trước",
+        featured: false,
+        urgent: false,
+        new: true,
+        description: "Tuyển nhân viên tạp vụ part-time dọn dẹp văn phòng. Ca sáng hoặc chiều.",
+        timestamp: new Date('2024-01-13').getTime(),
+        relevance: 68
+    }
+];
+
+// Biến toàn cục
+let currentJobs = [...jobsData];
+let currentSort = 'newest';
+let currentSearchTerm = '';
+let currentFilters = {
+    industry: '',
+    location: '',
+    salary: ''
+};
+
+// Khởi tạo trang
+function initWorkPage() {
+    displayJobs();
+    setupEventListeners();
+    setupSearchAndFilters();
+}
+
+// Hiển thị danh sách việc làm
+function displayJobs(jobs = currentJobs) {
+    const jobsGrid = document.getElementById('jobsGrid');
+    
+    if (!jobsGrid) {
+        console.error('Không tìm thấy element jobsGrid');
+        return;
+    }
+
+    if (jobs.length === 0) {
+        jobsGrid.innerHTML = `
+            <div class="no-jobs-found">
+                <div class="no-jobs-icon">😔</div>
+                <h3>Không tìm thấy việc làm phù hợp</h3>
+                <p>Hãy thử điều chỉnh từ khóa tìm kiếm hoặc bộ lọc của bạn</p>
+                <button class="btn btn-primary" onclick="resetFilters()">Xóa bộ lọc</button>
+            </div>
+        `;
+        return;
+    }
+
+    jobsGrid.innerHTML = jobs.map(job => `
+        <div class="job-card ${job.featured ? 'featured' : ''} ${job.urgent ? 'urgent' : ''} ${job.new ? 'new' : ''}" 
+             onclick="showJobDetails(${job.id})">
+            <div class="job-card-header">
+                <h4>${job.title}</h4>
+                ${job.urgent ? '<span class="urgent-badge">GẤP</span>' : ''}
+            </div>
+            <div class="job-company">
+                <div class="company-logo">${getCompanyInitials(job.company)}</div>
+                <span class="company">${job.company}</span>
+            </div>
+            <div class="job-meta">
+                <div class="job-location">
+                    <span class="icon">📍</span> ${job.location}
+                </div>
+                <span class="job-type">${job.type}</span>
+                <div class="job-salary">${job.salary}</div>
+            </div>
+            <div class="job-tags">
+                ${job.tags.map(tag => `<span class="job-tag">${tag}</span>`).join('')}
+            </div>
+            <div class="job-footer">
+                <div class="job-time">
+                    <span class="icon">🕒</span> ${job.time}
+                </div>
+                <div class="job-actions">
+                    <button class="job-action-btn" onclick="event.stopPropagation(); saveJob(${job.id})" title="Lưu công việc">
+                        <span class="icon">💾</span>
+                    </button>
+                    <button class="job-action-btn" onclick="event.stopPropagation(); shareJob(${job.id})" title="Chia sẻ">
+                        <span class="icon">📤</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    `).join('');
+}
+
+// Lấy chữ cái đầu của tên công ty
+function getCompanyInitials(companyName) {
+    return companyName
+        .split(' ')
+        .map(word => word.charAt(0))
+        .join('')
+        .toUpperCase()
+        .substring(0, 2);
+}
+
+// Thiết lập event listeners
+function setupEventListeners() {
+    // Sắp xếp
+    const sortSelect = document.querySelector('.sort-select');
+    if (sortSelect) {
+        sortSelect.addEventListener('change', function(e) {
+            currentSort = e.target.value;
+            sortJobs();
+        });
+    }
+
+    // Tải thêm
+    const loadMoreBtn = document.getElementById('loadMoreBtn');
+    if (loadMoreBtn) {
+        loadMoreBtn.addEventListener('click', loadMoreJobs);
+    }
+
+    // Đóng modal khi click outside
+    document.addEventListener('click', function(e) {
+        if (e.target.classList.contains('modal')) {
+            closeJobModal();
+        }
+    });
+
+    // Đóng modal bằng ESC
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape') {
+            closeJobModal();
+        }
+    });
+}
+
+// Thiết lập tìm kiếm và bộ lọc
+function setupSearchAndFilters() {
+    const searchInput = document.querySelector('.search-input');
+    const searchBtn = document.querySelector('.search-btn');
+    const filterSelects = document.querySelectorAll('.filter-select');
+
+    // Tìm kiếm
+    if (searchBtn) {
+        searchBtn.addEventListener('click', performSearch);
+    }
+
+    if (searchInput) {
+        searchInput.addEventListener('input', function(e) {
+            currentSearchTerm = e.target.value.toLowerCase();
+            performSearch();
+        });
+
+        searchInput.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                performSearch();
+            }
+        });
+    }
+
+    // Bộ lọc
+    filterSelects.forEach(select => {
+        select.addEventListener('change', function(e) {
+            const filterType = e.target.parentElement.querySelector('label').textContent.toLowerCase();
+            if (filterType.includes('ngành')) {
+                currentFilters.industry = e.target.value;
+            } else if (filterType.includes('địa')) {
+                currentFilters.location = e.target.value;
+            } else if (filterType.includes('lương')) {
+                currentFilters.salary = e.target.value;
+            }
+            performSearch();
+        });
+    });
+}
+
+// Thực hiện tìm kiếm
+function performSearch() {
+    let filteredJobs = jobsData.filter(job => {
+        // Tìm kiếm theo từ khóa
+        const matchesSearch = currentSearchTerm === '' || 
+            job.title.toLowerCase().includes(currentSearchTerm) ||
+            job.company.toLowerCase().includes(currentSearchTerm) ||
+            job.tags.some(tag => tag.toLowerCase().includes(currentSearchTerm)) ||
+            job.description.toLowerCase().includes(currentSearchTerm);
+
+        // Lọc theo ngành nghề
+        const matchesIndustry = currentFilters.industry === '' || 
+            job.tags.some(tag => tag.toLowerCase().includes(currentFilters.industry));
+
+        // Lọc theo địa điểm
+        const matchesLocation = currentFilters.location === '' || 
+            job.location.toLowerCase().includes(currentFilters.location);
+
+        // Lọc theo mức lương (đơn giản hóa)
+        const matchesSalary = currentFilters.salary === '' || 
+            checkSalaryMatch(job.salary, currentFilters.salary);
+
+        return matchesSearch && matchesIndustry && matchesLocation && matchesSalary;
+    });
+
+    // Áp dụng sắp xếp
+    sortJobs(filteredJobs);
+}
+
+// Kiểm tra khớp mức lương
+function checkSalaryMatch(jobSalary, filter) {
+    const salaryText = jobSalary.toLowerCase();
+    
+    if (filter === '5-10') {
+        return salaryText.includes('20') || salaryText.includes('25') || salaryText.includes('22');
+    } else if (filter === '10-15') {
+        return salaryText.includes('150') || salaryText.includes('100');
+    } else if (filter === '15-20') {
+        return salaryText.includes('160') || salaryText.includes('400');
+    } else if (filter === '20+') {
+        return salaryText.includes('300') || salaryText.includes('400');
+    }
+    
+    return true;
+}
+
+// Sắp xếp công việc
+function sortJobs(jobs = currentJobs) {
+    let sortedJobs = [...jobs];
+
+    switch (currentSort) {
+        case 'newest':
+            sortedJobs.sort((a, b) => b.timestamp - a.timestamp);
+            break;
+        case 'relevant':
+            sortedJobs.sort((a, b) => b.relevance - a.relevance);
+            break;
+        case 'salary':
+            sortedJobs.sort((a, b) => {
+                const getMaxSalary = (salary) => {
+                    const matches = salary.match(/(\d+)/g);
+                    return matches ? Math.max(...matches.map(Number)) : 0;
+                };
+                return getMaxSalary(b.salary) - getMaxSalary(a.salary);
+            });
+            break;
+    }
+
+    currentJobs = sortedJobs;
+    displayJobs(sortedJobs);
+}
+
+// Tải thêm công việc
+function loadMoreJobs() {
+    // Trong thực tế, đây sẽ là API call
+    const loadMoreBtn = document.getElementById('loadMoreBtn');
+    loadMoreBtn.textContent = 'Đang tải...';
+    loadMoreBtn.disabled = true;
+
+    setTimeout(() => {
+        // Giả lập thêm dữ liệu
+        const newJobs = [
+            {
+                id: 11,
+                title: "Nhân viên phục vụ quán ăn",
+                company: "Quán ăn gia đình An Giang",
+                location: "An Giang",
+                type: "Part-time",
+                salary: "18,000đ/giờ",
+                tags: ["Phục vụ", "Nhà hàng", "Part-time"],
+                time: "7 ngày trước",
+                featured: false,
+                urgent: false,
+                new: false,
+                description: "Tuyển nhân viên phục vụ part-time cho quán ăn. Ca sáng/chiều.",
+                timestamp: new Date('2024-01-09').getTime(),
+                relevance: 72
+            },
+            {
+                id: 12,
+                title: "Bán hàng online",
+                company: "Shop thời trang online",
+                location: "Online/An Giang",
+                type: "Part-time",
+                salary: "3,000,000đ - 5,000,000đ/tháng",
+                tags: ["Bán hàng", "Online", "Part-time"],
+                time: "1 tuần trước",
+                featured: true,
+                urgent: false,
+                new: false,
+                description: "Tuyển CTV bán hàng online. Làm việc remote, hưởng hoa hồng.",
+                timestamp: new Date('2024-01-08').getTime(),
+                relevance: 84
+            }
+        ];
+
+        currentJobs = [...currentJobs, ...newJobs];
+        displayJobs(currentJobs);
+        
+        loadMoreBtn.textContent = 'Tải thêm việc làm';
+        loadMoreBtn.disabled = false;
+
+        // Ẩn nút nếu không còn dữ liệu
+        if (currentJobs.length >= 15) {
+            loadMoreBtn.style.display = 'none';
+        }
+    }, 1000);
+}
+
+// Reset bộ lọc
+function resetFilters() {
+    currentSearchTerm = '';
+    currentFilters = { industry: '', location: '', salary: '' };
+    
+    const searchInput = document.querySelector('.search-input');
+    const filterSelects = document.querySelectorAll('.filter-select');
+    
+    if (searchInput) searchInput.value = '';
+    filterSelects.forEach(select => select.value = '');
+    
+    currentJobs = [...jobsData];
+    sortJobs();
+}
+
+// Hiển thị chi tiết công việc
+function showJobDetails(jobId) {
+    const job = jobsData.find(j => j.id === jobId);
+    if (!job) return;
+
+    const modalHTML = `
+        <div class="modal" id="jobModal" style="display: flex;">
+            <div class="modal-content job-details-modal">
+                <span class="close-btn" onclick="closeJobModal()">&times;</span>
+                <div class="job-details-header">
+                    <h3>${job.title}</h3>
+                    <p class="company">${job.company}</p>
+                    ${job.urgent ? '<span class="urgent-badge">TUYỂN GẤP</span>' : ''}
+                    ${job.featured ? '<span class="featured-badge">NỔI BẬT</span>' : ''}
+                </div>
+                <div class="job-details-content">
+                    <div class="detail-item">
+                        <span class="detail-label">📍 Địa điểm:</span>
+                        <span class="detail-value">${job.location}</span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-label">⏰ Hình thức:</span>
+                        <span class="detail-value">${job.type}</span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-label">💰 Mức lương:</span>
+                        <span class="detail-value salary">${job.salary}</span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-label">📝 Mô tả công việc:</span>
+                        <span class="detail-value">${job.description}</span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-label">🏷️ Yêu cầu:</span>
+                        <span class="detail-value tags">
+                            ${job.tags.map(tag => `<span class="tag">${tag}</span>`).join('')}
+                        </span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-label">🕒 Đã đăng:</span>
+                        <span class="detail-value">${job.time}</span>
+                    </div>
+                </div>
+                <div class="job-details-actions">
+                    <button class="apply-btn" onclick="applyJob(${job.id})">
+                        <span class="icon">📨</span>
+                        Ứng tuyển ngay
+                    </button>
+                    <button class="save-btn" onclick="saveJob(${job.id})">
+                        <span class="icon">💾</span>
+                        Lưu công việc
+                    </button>
+                </div>
+            </div>
+        </div>
+    `;
+
+    document.body.insertAdjacentHTML('beforeend', modalHTML);
+}
+
+// Đóng modal
+function closeJobModal() {
+    const modal = document.getElementById('jobModal');
+    if (modal) {
+        modal.remove();
+    }
+}
+
+// Ứng tuyển
+function applyJob(jobId) {
+    const job = jobsData.find(j => j.id === jobId);
+    const user = JSON.parse(localStorage.getItem('user'));
+    
+    if (!user) {
+        alert('Vui lòng đăng nhập để ứng tuyển!');
+        closeJobModal();
+        window.location.href = 'account.html';
+        return;
+    }
+    
+    // Lưu ứng tuyển vào localStorage
+    const applications = JSON.parse(localStorage.getItem('jobApplications') || '[]');
+    applications.push({
+        jobId: job.id,
+        jobTitle: job.title,
+        company: job.company,
+        appliedAt: new Date().toISOString(),
+        status: 'pending'
+    });
+    localStorage.setItem('jobApplications', JSON.stringify(applications));
+    
+    alert(`🎉 Bạn đã ứng tuyển thành công vào vị trí: ${job.title}\nTại: ${job.company}`);
+    closeJobModal();
+}
+
+// Lưu công việc
+function saveJob(jobId) {
+    const job = jobsData.find(j => j.id === jobId);
+    const user = JSON.parse(localStorage.getItem('user'));
+    
+    if (!user) {
+        alert('Vui lòng đăng nhập để lưu công việc!');
+        return;
+    }
+    
+    const savedJobs = JSON.parse(localStorage.getItem('savedJobs') || '[]');
+    
+    // Kiểm tra xem đã lưu chưa
+    if (savedJobs.some(saved => saved.jobId === job.id)) {
+        alert('Công việc này đã được lưu trước đó!');
+        return;
+    }
+    
+    savedJobs.push({
+        jobId: job.id,
+        jobTitle: job.title,
+        company: job.company,
+        salary: job.salary,
+        location: job.location,
+        savedAt: new Date().toISOString()
+    });
+    
+    localStorage.setItem('savedJobs', JSON.stringify(savedJobs));
+    alert(`✅ Đã lưu công việc: ${job.title}`);
+}
+
+// Chia sẻ công việc
+function shareJob(jobId) {
+    const job = jobsData.find(j => j.id === jobId);
+    const shareUrl = `${window.location.origin}${window.location.pathname}?job=${job.id}`;
+    const shareText = `🔔 Cơ hội việc làm: ${job.title} tại ${job.company}\n📍 ${job.location}\n💰 ${job.salary}\n\n${shareUrl}`;
+
+    if (navigator.share) {
+        navigator.share({
+            title: job.title,
+            text: shareText,
+            url: shareUrl
+        });
+    } else {
+        // Fallback: copy to clipboard
+        navigator.clipboard.writeText(shareText).then(() => {
+            alert('📋 Đã copy thông tin công việc vào clipboard!');
+        });
+    }
+}
+
+// Khởi chạy khi trang load
+document.addEventListener('DOMContentLoaded', function() {
+    initWorkPage();
+    
+    // Kiểm tra URL parameters
+    const urlParams = new URLSearchParams(window.location.search);
+    const jobId = urlParams.get('job');
+    if (jobId) {
+        setTimeout(() => showJobDetails(parseInt(jobId)), 500);
+    }
+});
+</script>
+</body>
+</html>

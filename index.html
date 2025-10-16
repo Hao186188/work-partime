@@ -7,77 +7,6 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
     <title>Tuyển dụng của Lớp Quản Trị Mạng 3 Khóa 14 Trường Cao Đẳng Nghề Kiên Giang</title>
-    <style>
-      /* Additional styles for dropdown */
-      .dropdown {
-        position: relative;
-        display: inline-block;
-      }
-
-      .dropdown-toggle {
-        background: none;
-        border: none;
-        color: inherit;
-        font-size: inherit;
-        cursor: pointer;
-        padding: 8px 16px;
-        text-decoration: none;
-        display: inline-block;
-      }
-
-      .dropdown-toggle:hover {
-        color: #007bff;
-      }
-
-      .dropdown-menu {
-        display: none;
-        position: absolute;
-        top: 100%;
-        left: 0;
-        background: white;
-        min-width: 180px;
-        box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-        border-radius: 8px;
-        z-index: 1000;
-        padding: 8px 0;
-      }
-
-      .dropdown-menu.show {
-        display: block;
-      }
-
-      .dropdown-item {
-        display: flex;
-        align-items: center;
-        padding: 10px 16px;
-        text-decoration: none;
-        color: #333;
-        transition: background-color 0.2s;
-      }
-
-      .dropdown-item:hover {
-        background-color: #f8f9fa;
-      }
-
-      .dropdown-item img {
-        width: 20px;
-        height: 20px;
-        margin-right: 10px;
-      }
-
-      .zalo-icon, .facebook-icon {
-        font-weight: bold;
-        margin-right: 8px;
-      }
-
-      .zalo-icon {
-        color: #0068ff;
-      }
-
-      .facebook-icon {
-        color: #1877f2;
-      }
-    </style>
   </head>
   <body>
     <!-- HEADER -->
@@ -89,7 +18,7 @@
           <a href="work.html">Việc làm</a>
           <a href="account.html">Đăng ký/Đăng nhập</a>
           <div class="dropdown">
-            <a href="#" class="dropdown-toggle">Liên hệ</a>
+            <a href="#" class="dropdown-toggle">CSKH</a>
             <div class="dropdown-menu" id="contactDropdown">
               <a href="https://zalo.me/0788984741" class="dropdown-item" target="_blank">
                 <span class="zalo-icon">Z</span>
@@ -97,7 +26,7 @@
               </a>
               <a href="https://facebook.com/share/17PfiN1Xrk/" class="dropdown-item" target="_blank">
                 <span class="facebook-icon">f</span>
-                Facebook:Như Ý
+                Facebook: Như Ý
               </a>
             </div>
           </div>
@@ -108,42 +37,75 @@
     <!-- HERO / SEARCH -->
     <section class="hero">
       <div class="container">
-        <h1>Tìm việc làm Full-time & Part-time</h1>
-        <form class="search-form">
-          <input type="text" placeholder="Nhập vị trí, công ty, kỹ năng...">
-          <select>
-            <option value="">Chọn khu vực</option>
-            <option value="hn">Hà Nội</option>
-            <option value="hcm">TP HCM</option>
-            <option value="dn">Đà Nẵng</option>
+        <h1>Tìm việc làm</h1>
+        <form class="search-form" id="searchForm">
+          <input type="text" id="searchKeyword" placeholder="Nhập vị trí, công ty, kỹ năng...">
+          <select id="searchLocation">
+            <option value="">Tất cả khu vực</option>
+            <option value="an giang">An Giang</option>
+            <option value="hà nội">Hà Nội</option>
+            <option value="tp hcm">TP HCM</option>
+            <option value="đà nẵng">Đà Nẵng</option>
           </select>
           <button type="submit">Tìm việc</button>
         </form>
+        <div class="quick-filters">
+          <button class="filter-btn" data-filter="part-time">Part-time</button>
+          <button class="filter-btn" data-filter="full-time">Full-time</button>
+          <button class="filter-btn" data-filter="remote">Remote</button>
+          <button class="filter-btn" data-filter="an giang">An Giang</button>
+        </div>
       </div>
     </section>
 
-    <!-- JOB LIST -->
-    <section class="job-list">
+    <!-- FEATURED JOBS -->
+    <section class="featured-jobs">
       <div class="container">
-        <h2>Việc làm mới nhất</h2>
-        <div class="jobs">
-          <div class="job-card">
-            <h3>Frontend Developer</h3>
-            <p class="company">Công ty ABC</p>
-            <p class="location">Hà Nội</p>
-            <p class="type">Full-time</p>
-          </div>
-          <div class="job-card">
-            <h3>Backend Developer</h3>
-            <p class="company">Công ty XYZ</p>
-            <p class="location">TP HCM</p>
+        <h2>Việc làm nổi bật</h2>
+        <div class="jobs-grid">
+          <div class="job-card" data-job="1">
+            <h3>Cà phê khỏe</h3>
+            <p class="company">None</p>
+            <p class="location">Văn Lang Street, An Giang</p>
             <p class="type">Part-time</p>
+            <p class="salary">22K/H</p>
           </div>
-          <div class="job-card">
-            <h3>Graphic Designer</h3>
-            <p class="company">Công ty DEF</p>
-            <p class="location">Đà Nẵng</p>
-            <p class="type">Full-time</p>
+          <div class="job-card" data-job="2">
+            <h3>Gia sư tại nhà</h3>
+            <p class="company">None</p>
+            <p class="location">An Giang</p>
+            <p class="type">Part-time</p>
+            <p class="salary">150k/Buổi</p>
+          </div>
+          <div class="job-card" data-job="3">
+            <h3>Phát tờ rơi</h3>
+            <p class="company">None</p>
+            <p class="location">An Giang</p>
+            <p class="type">Part-time</p>
+            <p class="salary">50k-100k/Buổi</p>
+          </div>
+        </div>
+        <div class="view-all-container">
+          <a href="work.html" class="view-all-btn">Xem tất cả việc làm</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- STATISTICS -->
+    <section class="statistics">
+      <div class="container">
+        <div class="stats-grid">
+          <div class="stat-item">
+            <h3>0+</h3>
+            <p>Công việc đang tuyển</p>
+          </div>
+          <div class="stat-item">
+            <h3>0+</h3>
+            <p>Nhà tuyển dụng</p>
+          </div>
+          <div class="stat-item">
+            <h3>0+</h3>
+            <p>Ứng viên đăng ký</p>
           </div>
         </div>
       </div>
@@ -161,39 +123,6 @@
       </div>
     </footer>
 
-    <script>
-      // Dropdown functionality
-      document.addEventListener('DOMContentLoaded', function() {
-        const dropdownToggle = document.querySelector('.dropdown-toggle');
-        const dropdownMenu = document.getElementById('contactDropdown');
-
-        dropdownToggle.addEventListener('click', function(e) {
-          e.preventDefault();
-          dropdownMenu.classList.toggle('show');
-        });
-
-        // Close dropdown when clicking outside
-        document.addEventListener('click', function(e) {
-          if (!e.target.closest('.dropdown')) {
-            dropdownMenu.classList.remove('show');
-          }
-        });
-
-        // Close dropdown when clicking on a dropdown item
-        const dropdownItems = document.querySelectorAll('.dropdown-item');
-        dropdownItems.forEach(item => {
-          item.addEventListener('click', function() {
-            dropdownMenu.classList.remove('show');
-          });
-        });
-      });
-
-      // Optional: Add keyboard navigation
-      document.addEventListener('keydown', function(e) {
-        if (e.key === 'Escape') {
-          document.getElementById('contactDropdown').classList.remove('show');
-        }
-      });
-    </script>
+    <script src="./script/script.js"></script>
   </body>
 </html>

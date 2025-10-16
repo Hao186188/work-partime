@@ -1,0 +1,806 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Quản lý tin đăng - Nhà tuyển dụng</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    /* Giữ nguyên toàn bộ CSS bạn đã có */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Inter', sans-serif;
+    }
+
+    :root {
+      --primary: #2563eb;
+      --primary-dark: #1d4ed8;
+      --success: #10b981;
+      --warning: #f59e0b;
+      --danger: #dc2626;
+      --gray-50: #f9fafb;
+      --gray-100: #f3f4f6;
+      --gray-200: #e5e7eb;
+      --gray-600: #4b5563;
+      --gray-900: #111827;
+    }
+
+    body {
+      background: var(--gray-50);
+      min-height: 100vh;
+    }
+
+    .dashboard-header {
+      background: white;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+      padding: 1rem 2rem;
+    }
+
+    .header-content {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .logo {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--primary);
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .user-menu {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 1.5rem;
+    }
+
+    .nav-links a {
+      color: var(--gray-600);
+      text-decoration: none;
+      font-weight: 500;
+      padding: 0.5rem 1rem;
+      border-radius: 6px;
+      transition: all 0.3s ease;
+    }
+
+    .nav-links a:hover, .nav-links a.active {
+      background: var(--primary);
+      color: white;
+    }
+
+    .dashboard-container {
+      display: flex;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 2rem;
+      gap: 2rem;
+    }
+
+    .sidebar {
+      width: 250px;
+      background: white;
+      border-radius: 12px;
+      padding: 1.5rem;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+      height: fit-content;
+    }
+
+    .nav-section {
+      margin-bottom: 2rem;
+    }
+
+    .nav-title {
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--gray-600);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 1rem;
+    }
+
+    .nav-links-vertical {
+      list-style: none;
+    }
+
+    .nav-links-vertical li {
+      margin-bottom: 0.5rem;
+    }
+
+    .nav-links-vertical a {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 0.75rem 1rem;
+      color: var(--gray-600);
+      text-decoration: none;
+      border-radius: 8px;
+      transition: all 0.3s ease;
+      font-weight: 500;
+    }
+
+    .nav-links-vertical a:hover, .nav-links-vertical a.active {
+      background: var(--primary);
+      color: white;
+    }
+
+    .main-content {
+      flex: 1;
+    }
+
+    .page-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 2rem;
+    }
+
+    .page-title {
+      font-size: 1.5rem;
+      font-weight: 600;
+      color: var(--gray-900);
+    }
+
+    .btn {
+      padding: 0.75rem 1.5rem;
+      border: none;
+      border-radius: 8px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .btn-primary {
+      background: var(--primary);
+      color: white;
+    }
+
+    .btn-primary:hover {
+      background: var(--primary-dark);
+      transform: translateY(-1px);
+    }
+
+    .stats-cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1.5rem;
+      margin-bottom: 2rem;
+    }
+
+    .stat-card {
+      background: white;
+      padding: 1.5rem;
+      border-radius: 12px;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+      text-align: center;
+    }
+
+    .stat-number {
+      font-size: 2rem;
+      font-weight: 700;
+      color: var(--primary);
+      margin-bottom: 0.5rem;
+    }
+
+    .stat-label {
+      color: var(--gray-600);
+      font-weight: 500;
+    }
+
+    .jobs-table {
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+      overflow: hidden;
+    }
+
+    .table-header {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr 1fr 1fr auto;
+      gap: 1rem;
+      padding: 1rem 1.5rem;
+      background: var(--gray-50);
+      border-bottom: 1px solid var(--gray-200);
+      font-weight: 600;
+      color: var(--gray-900);
+    }
+
+    .table-row {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr 1fr 1fr auto;
+      gap: 1rem;
+      padding: 1rem 1.5rem;
+      border-bottom: 1px solid var(--gray-200);
+      align-items: center;
+    }
+
+    .table-row:hover {
+      background: var(--gray-50);
+    }
+
+    .job-title {
+      font-weight: 600;
+      color: var(--gray-900);
+    }
+
+    .job-company {
+      color: var(--gray-600);
+      font-size: 0.9rem;
+    }
+
+    .status-badge {
+      padding: 0.25rem 0.75rem;
+      border-radius: 20px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      text-align: center;
+    }
+
+    .status-active {
+      background: #dcfce7;
+      color: #166534;
+    }
+
+    .status-draft {
+      background: #fef3c7;
+      color: #92400e;
+    }
+
+    .status-expired {
+      background: #fecaca;
+      color: #dc2626;
+    }
+
+    .action-buttons {
+      display: flex;
+      gap: 0.5rem;
+    }
+
+    .btn-icon {
+      padding: 0.5rem;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      background: transparent;
+    }
+
+    .btn-edit {
+      color: var(--primary);
+    }
+
+    .btn-edit:hover {
+      background: var(--primary);
+      color: white;
+    }
+
+    .btn-delete {
+      color: var(--danger);
+    }
+
+    .btn-delete:hover {
+      background: var(--danger);
+      color: white;
+    }
+
+    .empty-state {
+      text-align: center;
+      padding: 3rem;
+      color: var(--gray-600);
+    }
+
+    .empty-state-icon {
+      font-size: 3rem;
+      margin-bottom: 1rem;
+    }
+
+    .message {
+      padding: 1rem;
+      border-radius: 8px;
+      margin-bottom: 1.5rem;
+      font-weight: 500;
+    }
+
+    .message.success {
+      background: #dcfce7;
+      color: #166534;
+      border: 1px solid #bbf7d0;
+    }
+
+    .message.error {
+      background: #fef2f2;
+      color: #dc2626;
+      border: 1px solid #fecaca;
+    }
+
+    /* Thêm CSS mới */
+    .filters {
+      display: flex;
+      gap: 15px;
+      margin-bottom: 20px;
+      flex-wrap: wrap;
+    }
+
+    .filter-group {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+    }
+
+    .filter-group label {
+      font-size: 0.85em;
+      color: var(--gray-600);
+      font-weight: 500;
+    }
+
+    .filter-group select,
+    .filter-group input {
+      padding: 8px 12px;
+      border: 1px solid var(--gray-200);
+      border-radius: 5px;
+      font-size: 0.9em;
+    }
+
+    .notification {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      padding: 15px 20px;
+      border-radius: 5px;
+      color: white;
+      z-index: 1000;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      animation: slideIn 0.3s ease;
+    }
+
+    .notification.success { background: #28a745; }
+    .notification.error { background: #dc3545; }
+    .notification.info { background: #17a2b8; }
+
+    .notification button {
+      background: none;
+      border: none;
+      color: white;
+      cursor: pointer;
+      font-size: 1.2em;
+    }
+
+    @keyframes slideIn {
+      from { transform: translateX(100%); }
+      to { transform: translateX(0); }
+    }
+
+    @media (max-width: 768px) {
+      .dashboard-container {
+        flex-direction: column;
+        padding: 1rem;
+      }
+
+      .sidebar {
+        width: 100%;
+      }
+
+      .table-header, .table-row {
+        grid-template-columns: 1fr;
+        gap: 0.5rem;
+      }
+
+      .action-buttons {
+        justify-content: center;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Header -->
+  <header class="dashboard-header">
+    <div class="header-content">
+      <a href="index.html" class="logo">
+        <span>💼</span>
+        Nhật Hào
+      </a>
+      <div class="user-menu">
+        <nav class="nav-links">
+          <a href="employer-dashboard.html">Dashboard</a>
+          <a href="manage-jobs.html" class="active">Quản lý tin</a>
+          <a href="candidates.html">Ứng viên</a>
+          <a href="employer-profile.html">Hồ sơ</a>
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <div class="dashboard-container">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <nav class="nav-section">
+        <div class="nav-title">Quản lý tin đăng</div>
+        <ul class="nav-links-vertical">
+          <li><a href="post-job.html" class="btn-primary" style="color: white; background: var(--primary);">
+            <i class="fas fa-plus"></i> Đăng tin mới
+          </a></li>
+          <li><a href="#" class="active" onclick="filterJobs('all')">
+            <i class="fas fa-list"></i> Tất cả tin đăng
+          </a></li>
+          <li><a href="#" onclick="filterJobs('active')">
+            <i class="fas fa-play-circle"></i> Tin đang hoạt động
+          </a></li>
+          <li><a href="#" onclick="filterJobs('draft')">
+            <i class="fas fa-edit"></i> Tin nháp
+          </a></li>
+          <li><a href="#" onclick="filterJobs('expired')">
+            <i class="fas fa-clock"></i> Tin hết hạn
+          </a></li>
+        </ul>
+      </nav>
+
+      <nav class="nav-section">
+        <div class="nav-title">Thống kê</div>
+        <ul class="nav-links-vertical">
+          <li><a href="analytics.html">
+            <i class="fas fa-chart-line"></i> Phân tích hiệu suất
+          </a></li>
+          <li><a href="reports.html">
+            <i class="fas fa-chart-bar"></i> Báo cáo ứng viên
+          </a></li>
+        </ul>
+      </nav>
+    </aside>
+
+    <!-- Main Content Area -->
+    <main class="main-content">
+      <div class="page-header">
+        <h1 class="page-title">Quản lý tin đăng</h1>
+        <a href="post-job.html" class="btn btn-primary">
+          <i class="fas fa-plus"></i> Đăng tin mới
+        </a>
+      </div>
+
+      <div id="message" class="message" style="display: none;"></div>
+
+      <!-- Bộ lọc -->
+      <div class="filters">
+        <div class="filter-group">
+          <label for="searchJobs">Tìm kiếm</label>
+          <input type="text" id="searchJobs" placeholder="Tìm theo tiêu đề hoặc công ty...">
+        </div>
+        <div class="filter-group">
+          <label for="statusFilter">Trạng thái</label>
+          <select id="statusFilter">
+            <option value="">Tất cả trạng thái</option>
+            <option value="active">Đang hoạt động</option>
+            <option value="draft">Bản nháp</option>
+            <option value="expired">Hết hạn</option>
+            <option value="archived">Đã lưu trữ</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Stats -->
+      <div class="stats-cards">
+        <div class="stat-card">
+          <div class="stat-number" id="totalJobs">0</div>
+          <div class="stat-label">Tổng số tin</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number" id="activeJobs">0</div>
+          <div class="stat-label">Đang hoạt động</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number" id="totalApplications">0</div>
+          <div class="stat-label">Đơn ứng tuyển</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number" id="totalViews">0</div>
+          <div class="stat-label">Lượt xem</div>
+        </div>
+      </div>
+
+      <!-- Jobs Table -->
+      <div class="jobs-table">
+        <div class="table-header">
+          <div>Vị trí tuyển dụng</div>
+          <div>Trạng thái</div>
+          <div>Ứng viên</div>
+          <div>Lượt xem</div>
+          <div>Ngày đăng</div>
+          <div>Thao tác</div>
+        </div>
+
+        <div id="jobsList">
+          <!-- Jobs will be loaded here -->
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <script>
+    // Khởi tạo khi trang được load
+    document.addEventListener('DOMContentLoaded', function() {
+      console.log('🚀 Khởi tạo trang manage-jobs...');
+      initializeEventListeners();
+      loadJobsData();
+    });
+
+    // Kiểm tra đăng nhập
+    async function checkAuth() {
+      const loggedEmployer = localStorage.getItem('loggedEmployer') || sessionStorage.getItem('loggedEmployer');
+      if (!loggedEmployer) {
+        window.location.href = 'employer-login.html';
+        return null;
+      }
+      return JSON.parse(loggedEmployer);
+    }
+
+    // Hiển thị thông báo
+    function showMessage(message, type = 'info') {
+      const messageEl = document.getElementById('message');
+      messageEl.textContent = message;
+      messageEl.className = `message ${type}`;
+      messageEl.style.display = 'block';
+      
+      setTimeout(() => {
+        messageEl.style.display = 'none';
+      }, 5000);
+    }
+
+    // Hiển thị notification
+    function showNotification(message, type = 'info') {
+      const notification = document.createElement('div');
+      notification.className = `notification ${type}`;
+      notification.innerHTML = `
+        <span>${message}</span>
+        <button onclick="this.parentElement.remove()">&times;</button>
+      `;
+      
+      document.body.appendChild(notification);
+      
+      setTimeout(() => {
+        if (notification.parentElement) {
+          notification.remove();
+        }
+      }, 3000);
+    }
+
+    // Load jobs data từ localStorage
+    async function loadJobsData() {
+      const employer = await checkAuth();
+      if (!employer) return;
+
+      console.log('🔄 Đang tải dữ liệu jobs từ localStorage...');
+      
+      // Lấy dữ liệu từ localStorage
+      const employerJobs = JSON.parse(localStorage.getItem('employerJobs')) || [];
+      
+      // Nếu không có dữ liệu trong localStorage, thử lấy từ API
+      if (employerJobs.length === 0) {
+        console.log('📝 Không có dữ liệu trong localStorage, thử lấy từ API...');
+        try {
+          await dataAPI.init();
+          const allJobs = await dataAPI.getJobs();
+          const apiEmployerJobs = allJobs.filter(job => job.employerId === employer.id);
+          
+          if (apiEmployerJobs.length > 0) {
+            // Lưu dữ liệu từ API vào localStorage
+            localStorage.setItem('employerJobs', JSON.stringify(apiEmployerJobs));
+            updateStatsAndDisplay(apiEmployerJobs);
+            return;
+          }
+        } catch (error) {
+          console.error('❌ Lỗi khi lấy dữ liệu từ API:', error);
+        }
+      }
+
+      console.log('📊 Jobs found in localStorage:', employerJobs);
+      updateStatsAndDisplay(employerJobs);
+    }
+
+    // Cập nhật thống kê và hiển thị jobs
+    function updateStatsAndDisplay(jobs) {
+      // Update stats
+      document.getElementById('totalJobs').textContent = jobs.length;
+      document.getElementById('activeJobs').textContent = jobs.filter(job => job.status === 'active').length;
+      
+      const totalApplications = jobs.reduce((sum, job) => sum + (job.applications || job.applicants || 0), 0);
+      const totalViews = jobs.reduce((sum, job) => sum + (job.views || 0), 0);
+      
+      document.getElementById('totalApplications').textContent = totalApplications;
+      document.getElementById('totalViews').textContent = totalViews;
+
+      // Display jobs
+      displayJobs(jobs);
+    }
+
+    // Display jobs in table
+    function displayJobs(jobs) {
+      const jobsList = document.getElementById('jobsList');
+      
+      if (jobs.length === 0) {
+        jobsList.innerHTML = `
+          <div class="empty-state">
+            <div class="empty-state-icon">
+              <i class="fas fa-inbox"></i>
+            </div>
+            <h3>Chưa có tin đăng nào</h3>
+            <p>Bắt đầu bằng cách đăng tin tuyển dụng đầu tiên của bạn</p>
+            <a href="post-job.html" class="btn btn-primary" style="margin-top: 1rem;">
+              <i class="fas fa-plus"></i> Đăng tin ngay
+            </a>
+          </div>
+        `;
+        return;
+      }
+
+      jobsList.innerHTML = jobs.map(job => `
+        <div class="table-row">
+          <div>
+            <div class="job-title">${job.jobTitle || job.title}</div>
+            <div class="job-company">${job.location} • ${getJobTypeText(job.jobType)}</div>
+            <div class="job-meta" style="font-size: 0.8rem; color: #666; margin-top: 0.25rem;">
+              ${job.company || ''} • ID: ${job.id}
+            </div>
+          </div>
+          <div>
+            <span class="status-badge status-${job.status}">${getStatusText(job.status)}</span>
+          </div>
+          <div>${job.applications || job.applicants || 0}</div>
+          <div>${job.views || 0}</div>
+          <div>${formatDate(job.datePosted || job.createdAt)}</div>
+          <div class="action-buttons">
+            <button class="btn-icon btn-edit" onclick="editJob(${job.id})" title="Chỉnh sửa">
+              <i class="fas fa-edit"></i>
+            </button>
+            <button class="btn-icon btn-delete" onclick="deleteJob(${job.id})" title="Xóa">
+              <i class="fas fa-trash"></i>
+            </button>
+            <button class="btn-icon btn-view" onclick="viewJob(${job.id})" title="Xem chi tiết">
+              <i class="fas fa-eye"></i>
+            </button>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    // Helper functions
+    function getJobTypeText(type) {
+      const types = {
+        'fulltime': 'Toàn thời gian',
+        'parttime': 'Bán thời gian',
+        'contract': 'Hợp đồng',
+        'internship': 'Thực tập',
+        'remote': 'Từ xa'
+      };
+      return types[type] || type;
+    }
+
+    function getStatusText(status) {
+      const statuses = {
+        'active': 'Đang hoạt động',
+        'draft': 'Bản nháp',
+        'expired': 'Hết hạn',
+        'archived': 'Đã lưu trữ'
+      };
+      return statuses[status] || status;
+    }
+
+    function formatDate(dateString) {
+      if (!dateString) return 'Chưa cập nhật';
+      const date = new Date(dateString);
+      return date.toLocaleDateString('vi-VN');
+    }
+
+    // Edit job
+    function editJob(jobId) {
+      // Chuyển đến trang chỉnh sửa với ID công việc
+      window.location.href = `post-job.html?edit=${jobId}`;
+    }
+
+    // View job details
+    function viewJob(jobId) {
+      // Xem chi tiết công việc
+      showMessage('Tính năng xem chi tiết đang được phát triển', 'info');
+    }
+
+    // Delete job
+    async function deleteJob(jobId) {
+      if (!confirm('Bạn có chắc chắn muốn xóa tin tuyển dụng này?')) {
+        return;
+      }
+
+      try {
+        // Xóa từ localStorage
+        let jobs = JSON.parse(localStorage.getItem('employerJobs')) || [];
+        jobs = jobs.filter(job => job.id !== jobId);
+        localStorage.setItem('employerJobs', JSON.stringify(jobs));
+        
+        // Cố gắng xóa từ API nếu có
+        try {
+          if (typeof dataAPI !== 'undefined' && dataAPI.deleteJob) {
+            await dataAPI.deleteJob(jobId);
+          }
+        } catch (apiError) {
+          console.log('Không thể xóa từ API, chỉ xóa từ localStorage');
+        }
+        
+        showNotification('Đã xóa tin tuyển dụng thành công', 'success');
+        await loadJobsData(); // Reload data
+      } catch (error) {
+        showNotification('Có lỗi xảy ra khi xóa tin', 'error');
+      }
+    }
+
+    // Lọc jobs
+    function filterJobs(status) {
+      const jobs = JSON.parse(localStorage.getItem('employerJobs')) || [];
+      let filteredJobs = jobs;
+      
+      if (status !== 'all') {
+        filteredJobs = jobs.filter(job => job.status === status);
+      }
+      
+      updateStatsAndDisplay(filteredJobs);
+    }
+
+    // Khởi tạo event listeners
+    function initializeEventListeners() {
+      // Tìm kiếm công việc
+      const searchInput = document.getElementById('searchJobs');
+      if (searchInput) {
+        searchInput.addEventListener('input', function(e) {
+          const searchTerm = e.target.value.toLowerCase();
+          const jobs = JSON.parse(localStorage.getItem('employerJobs')) || [];
+          const filteredJobs = jobs.filter(job => 
+            (job.jobTitle || job.title).toLowerCase().includes(searchTerm) ||
+            (job.company || '').toLowerCase().includes(searchTerm)
+          );
+          updateStatsAndDisplay(filteredJobs);
+        });
+      }
+      
+      // Lọc theo trạng thái
+      const statusFilter = document.getElementById('statusFilter');
+      if (statusFilter) {
+        statusFilter.addEventListener('change', function(e) {
+          const status = e.target.value;
+          const jobs = JSON.parse(localStorage.getItem('employerJobs')) || [];
+          const filteredJobs = status ? jobs.filter(job => job.status === status) : jobs;
+          updateStatsAndDisplay(filteredJobs);
+        });
+      }
+    }
+
+    // Lắng nghe sự kiện thay đổi dữ liệu từ các trang khác
+    window.addEventListener('storage', function(e) {
+      if (e.key === 'employerJobs') {
+        console.log('🔄 Nhận sự kiện thay đổi employerJobs, reloading...');
+        loadJobsData();
+      }
+    });
+
+    // Tự động refresh khi quay lại trang
+    window.addEventListener('pageshow', function() {
+      loadJobsData();
+    });
+  </script>
+</body>
+</html>

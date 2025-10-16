@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CV Mẫu - Tuyển dụng</title>
+  <link rel="stylesheet" href="./style/cv.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    .cv-templates {
+      padding: 60px 0;
+      background: #f8f9fa;
+    }
+
+    .cv-templates h2 {
+      text-align: center;
+      margin-bottom: 40px;
+      font-size: 2.5rem;
+      color: #333;
+    }
+
+    .templates-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 30px;
+      margin-bottom: 40px;
+    }
+
+    .template-card {
+      background: white;
+      border-radius: 12px;
+      padding: 25px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+      transition: all 0.3s ease;
+      cursor: pointer;
+      text-align: center;
+    }
+
+    .template-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+    }
+
+    .template-preview {
+      width: 100%;
+      height: 200px;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      border-radius: 8px;
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-weight: 600;
+      font-size: 1.2rem;
+    }
+
+    .template-card h3 {
+      color: #2563eb;
+      margin-bottom: 10px;
+    }
+
+    .template-card p {
+      color: #666;
+      margin-bottom: 15px;
+    }
+
+    .template-features {
+      list-style: none;
+      text-align: left;
+      margin-bottom: 20px;
+    }
+
+    .template-features li {
+      padding: 5px 0;
+      color: #555;
+    }
+
+    .template-features li:before {
+      content: "✓";
+      color: #059669;
+      font-weight: bold;
+      margin-right: 10px;
+    }
+
+    .download-btn {
+      background: linear-gradient(135deg, #2563eb, #1d4ed8);
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: 600;
+      transition: all 0.3s ease;
+      width: 100%;
+    }
+
+    .download-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
+    }
+
+    .cv-guide {
+      padding: 60px 0;
+      background: white;
+    }
+
+    .guide-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 30px;
+    }
+
+    .guide-card {
+      background: #f8fafc;
+      border-radius: 12px;
+      padding: 30px;
+      border-left: 4px solid #2563eb;
+    }
+
+    .guide-card h3 {
+      color: #2563eb;
+      margin-bottom: 15px;
+    }
+
+    .guide-card ol, .guide-card ul {
+      margin-left: 20px;
+    }
+
+    .guide-card li {
+      margin-bottom: 8px;
+      color: #555;
+    }
+
+    @media (max-width: 768px) {
+      .templates-grid,
+      .guide-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- HEADER -->
+  <header class="header">
+    <div class="container">
+      <div class="logo"><a href="index.html" style="text-decoration: none; color: inherit;">Nhật Hào</a></div>
+      <nav class="nav">
+        <a href="index.html">Trang chủ</a>
+        <a href="work.html">Việc làm</a>
+        <a href="cv.html" class="active">CV</a>
+        <a href="map.html">Map</a>
+        <a href="account.html">Đăng ký/Đăng nhập</a>
+        <div class="dropdown">
+          <a href="#" class="dropdown-toggle">Liên hệ</a>
+          <div class="dropdown-menu" id="contactDropdown">
+            <a href="https://zalo.me/0788984741" class="dropdown-item" target="_blank">
+              <span class="zalo-icon">Z</span>
+              Zalo: 0788984741
+            </a>
+            <a href="https://facebook.com/share/17PfiN1Xrk/" class="dropdown-item" target="_blank">
+              <span class="facebook-icon">f</span>
+              Facebook: Như Ý
+            </a>
+          </div>
+        </div>
+      </nav>
+    </div>
+  </header>
+
+  <!-- CV TEMPLATES -->
+  <section class="cv-templates">
+    <div class="container">
+      <h2>CV Mẫu Chuyên Nghiệp</h2>
+      <div class="templates-grid">
+        <!-- Template 1 -->
+        <div class="template-card">
+          <div class="template-preview">CV Hiện Đại</div>
+          <h3>CV Hiện Đại</h3>
+          <p>Thiết kế clean, phù hợp cho developer và designer</p>
+          <ul class="template-features">
+            <li>Layout hiện đại</li>
+            <li>Tối ưu cho IT</li>
+            <li>Dễ dàng tùy chỉnh</li>
+            <li>File Word & PDF</li>
+          </ul>
+          <button class="download-btn" onclick="downloadCV('modern')">Tải xuống</button>
+        </div>
+
+        <!-- Template 2 -->
+        <div class="template-card">
+          <div class="template-preview">CV Kinh Doanh</div>
+          <h3>CV Kinh Doanh</h3>
+          <p>Chuyên nghiệp, phù hợp cho sales và marketing</p>
+          <ul class="template-features">
+            <li>Thiết kế chuyên nghiệp</li>
+            <li>Phù hợp kinh doanh</li>
+            <li>Highlight thành tích</li>
+            <li>File Word & PDF</li>
+          </ul>
+          <button class="download-btn" onclick="downloadCV('business')">Tải xuống</button>
+        </div>
+
+        <!-- Template 3 -->
+        <div class="template-card">
+          <div class="template-preview">CV Sáng Tạo</div>
+          <h3>CV Sáng Tạo</h3>
+          <p>Độc đáo, phù hợp cho creative và content</p>
+          <ul class="template-features">
+            <li>Thiết kế sáng tạo</li>
+            <li>Màu sắc trẻ trung</li>
+            <li>Phù hợp creative</li>
+            <li>File Word & PDF</li>
+          </ul>
+          <button class="download-btn" onclick="downloadCV('creative')">Tải xuống</button>
+        </div>
+
+        <!-- Template 4 -->
+        <div class="template-card">
+          <div class="template-preview">CV Đơn Giản</div>
+          <h3>CV Đơn Giản</h3>
+          <p>Tối giản, phù hợp mọi ngành nghề</p>
+          <ul class="template-features">
+            <li>Thiết kế tối giản</li>
+            <li>Dễ đọc</li>
+            <li>Phù hợp mọi ngành</li>
+            <li>File Word & PDF</li>
+          </ul>
+          <button class="download-btn" onclick="downloadCV('simple')">Tải xuống</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CV GUIDE -->
+  <section class="cv-guide">
+    <div class="container">
+      <h2>Hướng Dẫn Viết CV Hiệu Quả</h2>
+      <div class="guide-grid">
+        <div class="guide-card">
+          <h3>📝 Cấu Trúc CV Chuẩn</h3>
+          <ol>
+            <li>Thông tin cá nhân</li>
+            <li>Mục tiêu nghề nghiệp</li>
+            <li>Kinh nghiệm làm việc</li>
+            <li>Học vấn & Bằng cấp</li>
+            <li>Kỹ năng chuyên môn</li>
+            <li>Chứng chỉ & Giải thưởng</li>
+          </ol>
+        </div>
+
+        <div class="guide-card">
+          <h3>💡 Mẹo Viết CV Ấn Tượng</h3>
+          <ul>
+            <li>Sử dụng từ khóa liên quan đến công việc</li>
+            <li>Định lượng thành tích bằng số</li>
+            <li>Giữ CV trong 2 trang A4</li>
+            <li>Kiểm tra chính tả kỹ lưỡng</li>
+            <li>Customize CV cho từng công việc</li>
+          </ul>
+        </div>
+
+        <div class="guide-card">
+          <h3>🚀 Công Cụ Hỗ Trợ</h3>
+          <ul>
+            <li>Canva - Thiết kế CV online</li>
+            <li>Grammarly - Kiểm tra ngữ pháp</li>
+            <li>LinkedIn - Tạo CV từ profile</li>
+            <li>Google Docs - Template miễn phí</li>
+            <li>CV Maker - Tạo CV chuyên nghiệp</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="container">
+      <p>&copy; Nhật Hào 2025.</p>
+      <div class="socials">
+        <a href="https://facebook.com/share/17PfiN1Xrk/" target="_blank">Facebook</a>
+        <a href="https://zalo.me/0788984741" target="_blank">Zalo</a>
+        <a href="mailto:vothinhuyqtm3k14@gmail.com">Email</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Dropdown functionality
+    document.addEventListener('DOMContentLoaded', function() {
+      const dropdownToggle = document.querySelector('.dropdown-toggle');
+      const dropdownMenu = document.getElementById('contactDropdown');
+
+      dropdownToggle.addEventListener('click', function(e) {
+        e.preventDefault();
+        dropdownMenu.classList.toggle('show');
+      });
+
+      document.addEventListener('click', function(e) {
+        if (!e.target.closest('.dropdown')) {
+          dropdownMenu.classList.remove('show');
+        }
+      });
+    });
+
+    // Download CV function
+    function downloadCV(templateType) {
+      const templates = {
+        'modern': 'CV_Hien_Dai.docx',
+        'business': 'CV_Kinh_Doanh.docx', 
+        'creative': 'CV_Sang_Tao.docx',
+        'simple': 'CV_Don_Gian.docx'
+      };
+
+      const filename = templates[templateType];
+      
+      // Tạo thông báo download (trong thực tế sẽ là link download thật)
+      alert(`Đang tải xuống: ${filename}\n\nTrong phiên bản thực tế, file sẽ được tải xuống ngay lập tức.`);
+      
+      // Giả lập download (trong thực tế sẽ là window.location.href = 'path/to/file')
+      const link = document.createElement('a');
+      link.href = '#'; // Thay bằng đường dẫn thực tế
+      link.download = filename;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    }
+
+    // Add keyboard navigation
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape') {
+        document.getElementById('contactDropdown').classList.remove('show');
+      }
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,692 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Đăng nhập Nhà tuyển dụng - Nhật Hào</title>
+  <link rel="stylesheet" href="./style/main.css">
+  <link rel="stylesheet" href="./style/form.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Inter', sans-serif;
+    }
+
+    body {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    header {
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(10px);
+      padding: 1rem 2rem;
+      box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
+    }
+
+    .logo {
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: #2563eb;
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .logo::before {
+      content: "💼";
+      font-size: 1.5rem;
+    }
+
+    .form-container {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 2rem;
+      max-width: 500px;
+      margin: 0 auto;
+      width: 100%;
+    }
+
+    .auth-card {
+      background: white;
+      padding: 3rem 2.5rem;
+      border-radius: 20px;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+      width: 100%;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .auth-card::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: linear-gradient(135deg, #2563eb, #1d4ed8);
+    }
+
+    h2 {
+      color: #1e293b;
+      font-size: 2rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+      text-align: center;
+    }
+
+    .subtitle {
+      color: #64748b;
+      text-align: center;
+      margin-bottom: 2.5rem;
+      font-size: 1rem;
+    }
+
+    .form-group {
+      margin-bottom: 1.5rem;
+      position: relative;
+    }
+
+    .form-label {
+      display: block;
+      margin-bottom: 0.5rem;
+      color: #374151;
+      font-weight: 500;
+      font-size: 0.9rem;
+    }
+
+    .form-input {
+      width: 100%;
+      padding: 1rem 1.2rem;
+      border: 2px solid #e2e8f0;
+      border-radius: 12px;
+      font-size: 1rem;
+      transition: all 0.3s ease;
+      background: #f8fafc;
+    }
+
+    .form-input:focus {
+      outline: none;
+      border-color: #2563eb;
+      background: white;
+      box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+      transform: translateY(-2px);
+    }
+
+    .form-input.error {
+      border-color: #dc2626;
+      background: #fef2f2;
+    }
+
+    .password-toggle {
+      position: absolute;
+      right: 1rem;
+      top: 50%;
+      transform: translateY(-50%);
+      background: none;
+      border: none;
+      color: #64748b;
+      cursor: pointer;
+      font-size: 1.2rem;
+    }
+
+    .password-toggle:hover {
+      color: #2563eb;
+    }
+
+    .remember-forgot {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 2rem;
+      font-size: 0.9rem;
+    }
+
+    .remember-me {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      color: #374151;
+    }
+
+    .remember-me input[type="checkbox"] {
+      width: 16px;
+      height: 16px;
+      accent-color: #2563eb;
+    }
+
+    .forgot-password {
+      color: #2563eb;
+      text-decoration: none;
+      font-weight: 500;
+      transition: color 0.3s ease;
+    }
+
+    .forgot-password:hover {
+      color: #1d4ed8;
+      text-decoration: underline;
+    }
+
+    .submit-btn {
+      width: 100%;
+      padding: 1rem 2rem;
+      background: linear-gradient(135deg, #2563eb, #1d4ed8);
+      color: white;
+      border: none;
+      border-radius: 12px;
+      font-size: 1.1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      margin-bottom: 1.5rem;
+    }
+
+    .submit-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 25px rgba(37, 99, 235, 0.3);
+    }
+
+    .submit-btn:active {
+      transform: translateY(0);
+    }
+
+    .submit-btn:disabled {
+      background: #9ca3af;
+      cursor: not-allowed;
+      transform: none;
+      box-shadow: none;
+    }
+
+    .divider {
+      text-align: center;
+      margin: 2rem 0;
+      position: relative;
+      color: #64748b;
+      font-size: 0.9rem;
+    }
+
+    .divider::before {
+      content: "";
+      position: absolute;
+      top: 50%;
+      left: 0;
+      right: 0;
+      height: 1px;
+      background: #e2e8f0;
+    }
+
+    .divider span {
+      background: white;
+      padding: 0 1rem;
+      position: relative;
+    }
+
+    .social-login {
+      display: flex;
+      gap: 1rem;
+      margin-bottom: 2rem;
+    }
+
+    .social-btn {
+      flex: 1;
+      padding: 0.8rem;
+      border: 2px solid #e2e8f0;
+      border-radius: 10px;
+      background: white;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      font-weight: 500;
+    }
+
+    .social-btn.google:hover {
+      border-color: #dc2626;
+      color: #dc2626;
+    }
+
+    .social-btn.facebook:hover {
+      border-color: #2563eb;
+      color: #2563eb;
+    }
+
+    .auth-switch {
+      text-align: center;
+      color: #64748b;
+      font-size: 0.95rem;
+    }
+
+    .auth-switch a {
+      color: #2563eb;
+      text-decoration: none;
+      font-weight: 600;
+      margin-left: 0.5rem;
+    }
+
+    .auth-switch a:hover {
+      text-decoration: underline;
+    }
+
+    .message {
+      padding: 1rem;
+      border-radius: 10px;
+      margin-bottom: 1.5rem;
+      text-align: center;
+      font-weight: 500;
+    }
+
+    .message.success {
+      background: #dcfce7;
+      color: #166534;
+      border: 1px solid #bbf7d0;
+    }
+
+    .message.error {
+      background: #fef2f2;
+      color: #dc2626;
+      border: 1px solid #fecaca;
+    }
+
+    .message.info {
+      background: #dbeafe;
+      color: #1e40af;
+      border: 1px solid #bfdbfe;
+    }
+
+    .demo-accounts {
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      border-radius: 12px;
+      padding: 1.5rem;
+      margin-bottom: 2rem;
+    }
+
+    .demo-accounts h4 {
+      color: #374151;
+      margin-bottom: 1rem;
+      font-size: 1rem;
+      text-align: center;
+    }
+
+    .demo-account {
+      background: white;
+      border: 1px solid #e2e8f0;
+      border-radius: 8px;
+      padding: 1rem;
+      margin-bottom: 0.8rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .demo-account:hover {
+      border-color: #2563eb;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+
+    .demo-account:last-child {
+      margin-bottom: 0;
+    }
+
+    .demo-account .email {
+      font-weight: 600;
+      color: #1e293b;
+      margin-bottom: 0.3rem;
+    }
+
+    .demo-account .password {
+      color: #64748b;
+      font-size: 0.9rem;
+    }
+
+    .demo-account .click-hint {
+      color: #2563eb;
+      font-size: 0.8rem;
+      margin-top: 0.3rem;
+      font-weight: 500;
+    }
+
+    .loading {
+      display: inline-block;
+      width: 20px;
+      height: 20px;
+      border: 3px solid #ffffff;
+      border-radius: 50%;
+      border-top-color: transparent;
+      animation: spin 1s ease-in-out infinite;
+      margin-right: 0.5rem;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    @media (max-width: 768px) {
+      .form-container {
+        padding: 1rem;
+      }
+
+      .auth-card {
+        padding: 2rem 1.5rem;
+      }
+
+      h2 {
+        font-size: 1.7rem;
+      }
+
+      .social-login {
+        flex-direction: column;
+      }
+    }
+
+    /* Animation for form elements */
+    .form-group {
+      animation: slideUp 0.5s ease-out;
+    }
+
+    @keyframes slideUp {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <a href="index.html" class="logo">Nhật Hào</a>
+  </header>
+
+  <main class="form-container">
+    <div class="auth-card">
+      <h2>Đăng nhập Nhà tuyển dụng</h2>
+      <p class="subtitle">Quản lý tuyển dụng và tìm kiếm ứng viên tiềm năng</p>
+
+      <!-- Demo Accounts -->
+      <div class="demo-accounts">
+        <h4>Tài khoản demo (Click để đăng nhập)</h4>
+        <div class="demo-account" onclick="fillDemoAccount('techcompany@email.com', '123456')">
+          <div class="email">techcompany@email.com</div>
+          <div class="password">Mật khẩu: 123456</div>
+          <div class="click-hint">👆 Click để đăng nhập</div>
+        </div>
+        <div class="demo-account" onclick="fillDemoAccount('hrmanager@company.com', '123456')">
+          <div class="email">hrmanager@company.com</div>
+          <div class="password">Mật khẩu: 123456</div>
+          <div class="click-hint">👆 Click để đăng nhập</div>
+        </div>
+      </div>
+
+      <!-- Social Login -->
+      <div class="social-login">
+        <button class="social-btn google" onclick="socialLogin('google')">
+          <span>🔗</span> Google
+        </button>
+        <button class="social-btn facebook" onclick="socialLogin('facebook')">
+          <span>🔗</span> Facebook
+        </button>
+      </div>
+
+      <div class="divider"><span>Hoặc đăng nhập với email</span></div>
+
+      <!-- Messages -->
+      <div id="loginMessage" class="message" style="display: none;"></div>
+
+      <!-- Login Form -->
+      <form id="loginForm">
+        <div class="form-group">
+          <label class="form-label" for="email">Email công ty</label>
+          <input type="email" id="email" class="form-input" placeholder="company@email.com" required>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="password">Mật khẩu</label>
+          <input type="password" id="password" class="form-input" placeholder="Nhập mật khẩu" required>
+          <button type="button" class="password-toggle" onclick="togglePassword()">👁️</button>
+        </div>
+
+        <div class="remember-forgot">
+          <label class="remember-me">
+            <input type="checkbox" id="rememberMe">
+            Ghi nhớ đăng nhập
+          </label>
+          <a href="forgot-password.html" class="forgot-password">Quên mật khẩu?</a>
+        </div>
+
+        <button type="submit" class="submit-btn" id="submitBtn">
+          <span id="btnText">Đăng nhập</span>
+        </button>
+      </form>
+
+      <div class="auth-switch">
+        Chưa có tài khoản?
+        <a href="employer-register.html">Đăng ký nhà tuyển dụng</a>
+      </div>
+    </div>
+  </main>
+
+  <script>
+    // Khởi tạo dữ liệu mẫu nếu chưa có
+    function initializeEmployerData() {
+      if (!localStorage.getItem('employers')) {
+        const demoEmployers = [
+          {
+            id: 1,
+            email: 'adminnhathao@email.com',
+            password: '123456',
+            companyName: 'Công ty Công nghệ ABC',
+            phone: '0912345678',
+            address: '123 Đường ABC, Quận 1, TP.HCM',
+            taxCode: '0123456789',
+            contactPerson: 'Nguyễn Văn A',
+            position: 'Trưởng phòng Nhân sự',
+            isVerified: true,
+            createdAt: new Date().toISOString(),
+            lastLogin: null
+          },
+          {
+            id: 2,
+            email: 'hrmanager@company.com',
+            password: '123456',
+            companyName: 'Tập đoàn XYZ',
+            phone: '0987654321',
+            address: '456 Đường XYZ, Quận 3, TP.HCM',
+            taxCode: '9876543210',
+            contactPerson: 'Trần Thị B',
+            position: 'Quản lý Nhân sự',
+            isVerified: true,
+            createdAt: new Date().toISOString(),
+            lastLogin: null
+          }
+        ];
+        localStorage.setItem('employers', JSON.stringify(demoEmployers));
+      }
+    }
+
+    // Hiển thị thông báo
+    function showMessage(message, type = 'info') {
+      const messageEl = document.getElementById('loginMessage');
+      messageEl.textContent = message;
+      messageEl.className = `message ${type}`;
+      messageEl.style.display = 'block';
+      
+      if (type === 'success') {
+        setTimeout(() => {
+          messageEl.style.display = 'none';
+        }, 3000);
+      }
+    }
+
+    // Chuyển đổi hiển thị mật khẩu
+    function togglePassword() {
+      const passwordInput = document.getElementById('password');
+      const toggleBtn = document.querySelector('.password-toggle');
+      
+      if (passwordInput.type === 'password') {
+        passwordInput.type = 'text';
+        toggleBtn.textContent = '👁️‍🗨️';
+      } else {
+        passwordInput.type = 'password';
+        toggleBtn.textContent = '👁️';
+      }
+    }
+
+    // Điền thông tin tài khoản demo
+    function fillDemoAccount(email, password) {
+      document.getElementById('email').value = email;
+      document.getElementById('password').value = password;
+      showMessage('Đã điền thông tin demo! Nhấn "Đăng nhập" để tiếp tục.', 'info');
+    }
+
+    // Đăng nhập mạng xã hội
+    function socialLogin(provider) {
+      showMessage(`Đang kết nối với ${provider}...`, 'info');
+      // Trong thực tế, đây sẽ là logic kết nối API
+      setTimeout(() => {
+        showMessage(`Tính năng đăng nhập ${provider} đang được phát triển`, 'info');
+      }, 1000);
+    }
+
+    // Xác thực form
+    function validateForm(email, password) {
+      const errors = [];
+
+      if (!email) {
+        errors.push('Vui lòng nhập email');
+      } else if (!/\S+@\S+\.\S+/.test(email)) {
+        errors.push('Email không hợp lệ');
+      }
+
+      if (!password) {
+        errors.push('Vui lòng nhập mật khẩu');
+      } else if (password.length < 6) {
+        errors.push('Mật khẩu phải có ít nhất 6 ký tự');
+      }
+
+      return errors;
+    }
+
+    // Xử lý đăng nhập
+    async function handleLogin(email, password) {
+      const submitBtn = document.getElementById('submitBtn');
+      const btnText = document.getElementById('btnText');
+      
+      // Hiển thị loading
+      submitBtn.disabled = true;
+      btnText.innerHTML = '<span class="loading"></span> Đang đăng nhập...';
+
+      try {
+        // Giả lập delay mạng
+        await new Promise(resolve => setTimeout(resolve, 1500));
+
+        const employers = JSON.parse(localStorage.getItem('employers') || '[]');
+        const employer = employers.find(emp => 
+          emp.email === email && emp.password === password
+        );
+
+        if (employer) {
+          // Cập nhật thời gian đăng nhập cuối
+          employer.lastLogin = new Date().toISOString();
+          localStorage.setItem('employers', JSON.stringify(employers));
+          
+          // Lưu thông tin đăng nhập
+          const loginData = {
+            ...employer,
+            loginTime: new Date().toISOString(),
+            rememberMe: document.getElementById('rememberMe').checked
+          };
+          
+          if (loginData.rememberMe) {
+            localStorage.setItem('loggedEmployer', JSON.stringify(loginData));
+          } else {
+            sessionStorage.setItem('loggedEmployer', JSON.stringify(loginData));
+          }
+
+          showMessage('🎉 Đăng nhập thành công! Đang chuyển hướng...', 'success');
+          
+          setTimeout(() => {
+            window.location.href = 'employer-dashboard.html';
+          }, 2000);
+        } else {
+          throw new Error('Email hoặc mật khẩu không chính xác');
+        }
+      } catch (error) {
+        showMessage(error.message, 'error');
+        submitBtn.disabled = false;
+        btnText.textContent = 'Đăng nhập';
+      }
+    }
+
+    // Sự kiện khi trang load
+    document.addEventListener('DOMContentLoaded', function() {
+      initializeEmployerData();
+      
+      // Kiểm tra nếu đã đăng nhập
+      const loggedEmployer = localStorage.getItem('loggedEmployer') || sessionStorage.getItem('loggedEmployer');
+      if (loggedEmployer) {
+        const employer = JSON.parse(loggedEmployer);
+        showMessage(`Chào mừng trở lại, ${employer.companyName}!`, 'info');
+        document.getElementById('email').value = employer.email;
+        document.getElementById('rememberMe').checked = employer.rememberMe || false;
+      }
+
+      // Xử lý submit form
+      document.getElementById('loginForm').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        
+        const email = document.getElementById('email').value.trim();
+        const password = document.getElementById('password').value.trim();
+        
+        const errors = validateForm(email, password);
+        if (errors.length > 0) {
+          showMessage(errors[0], 'error');
+          return;
+        }
+
+        await handleLogin(email, password);
+      });
+
+      // Real-time validation
+      document.getElementById('email').addEventListener('blur', function() {
+        const email = this.value.trim();
+        if (email && !/\S+@\S+\.\S+/.test(email)) {
+          this.classList.add('error');
+        } else {
+          this.classList.remove('error');
+        }
+      });
+
+      document.getElementById('password').addEventListener('blur', function() {
+        const password = this.value.trim();
+        if (password && password.length < 6) {
+          this.classList.add('error');
+        } else {
+          this.classList.remove('error');
+        }
+      });
+    });
+
+    // Phím tắt
+    document.addEventListener('keydown', function(e) {
+      if (e.ctrlKey && e.key === 'Enter') {
+        document.getElementById('loginForm').dispatchEvent(new Event('submit'));
+      }
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,99 @@
+{
+  "users": [
+    {
+      "id": 1,
+      "name": "Nguyễn Văn A",
+      "email": "nguyenvana@email.com",
+      "phone": "0912345678",
+      "password": "$2b$10$hashedpassword123",
+      "hasCV": true,
+      "cvData": {
+        "education": "Cao đẳng Nghề Kiên Giang",
+        "experience": "2 năm part-time",
+        "skills": [
+          "Giao tiếp",
+          "Làm việc nhóm",
+          "Tin học văn phòng"
+        ]
+      },
+      "applications": [
+        {
+          "jobId": 1,
+          "appliedAt": "2024-01-15T10:30:00Z",
+          "status": "pending"
+        }
+      ],
+      "createdAt": "2024-01-10T08:00:00Z",
+      "verified": true
+    },
+    {
+      "id": 1760601504853,
+      "name": "võ nhật hào",
+      "email": "vonhathaoqtm3k14@gmail.com",
+      "phone": "0366017767",
+      "password": "$2a$10$1V8JLNLMDOKzJeihr0thheROalH7e6X37zT70vdo7fL5uexXKN.8a",
+      "hasCV": false,
+      "cvData": null,
+      "applications": [],
+      "createdAt": "2025-10-16T07:58:24.853Z",
+      "verified": false
+    }
+  ],
+  "jobs": [
+    {
+      "id": 1,
+      "title": "Nhân viên pha chế cà phê",
+      "company": "Cà phê khỏe",
+      "location": "Văn Lang Street, An Giang",
+      "type": "Part-time",
+      "salary": "22,000đ/giờ",
+      "tags": [
+        "Pha chế",
+        "Part-time",
+        "Không yêu cầu kinh nghiệm"
+      ],
+      "description": "Tuyển nhân viên pha chế làm việc part-time. Không yêu cầu kinh nghiệm, sẽ được đào tạo.",
+      "requirements": [
+        "Không yêu cầu kinh nghiệm",
+        "Có thể làm ca sáng/chiều",
+        "Thân thiện, nhiệt tình"
+      ],
+      "benefits": [
+        "Lương thưởng hấp dẫn",
+        "Được đào tạo",
+        "Môi trường trẻ trung"
+      ],
+      "employerId": 1,
+      "createdAt": "2024-01-15T08:00:00Z",
+      "expiresAt": "2024-02-15T08:00:00Z",
+      "active": true,
+      "applications": [
+        1
+      ]
+    }
+  ],
+  "employers": [
+    {
+      "id": 1,
+      "companyName": "Cà phê khỏe",
+      "email": "contact@caphekhoe.com",
+      "phone": "02973828888",
+      "address": "Văn Lang Street, An Giang",
+      "description": "Quán cà phê trẻ trung, năng động",
+      "verified": true,
+      "createdAt": "2024-01-01T00:00:00Z"
+    }
+  ],
+  "applications": [
+    {
+      "id": 1,
+      "jobId": 1,
+      "userId": 1,
+      "employerId": 1,
+      "status": "pending",
+      "appliedAt": "2024-01-15T10:30:00Z",
+      "employerViewed": false,
+      "notes": ""
+    }
+  ]
+}

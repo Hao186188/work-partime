@@ -1,0 +1,92 @@
+/* ==== EMPLOYER.CSS ==== */
+/* Dành riêng cho khu vực Nhà tuyển dụng */
+
+/* Container chính */
+main {
+  width: 90%;
+  max-width: 1000px;
+  margin: 30px auto;
+  background: #fff;
+  padding: 30px;
+  border-radius: 12px;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
+
+/* Tiêu đề chính */
+main h2 {
+  color: #007bff;
+  margin-bottom: 20px;
+}
+
+/* Ô tìm kiếm ứng viên */
+input#keyword {
+  width: 70%;
+  padding: 10px;
+  margin-right: 10px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+}
+
+/* Kết quả ứng viên */
+#result {
+  margin-top: 25px;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 15px;
+}
+
+/* Thẻ ứng viên */
+.card {
+  border: 1px solid #eee;
+  border-radius: 10px;
+  padding: 15px;
+  background: #fafafa;
+  transition: 0.25s;
+}
+
+.card:hover {
+  background: #f0f8ff;
+  transform: translateY(-3px);
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+.card h3 {
+  color: #007bff;
+  margin-bottom: 8px;
+}
+
+.card p {
+  margin: 4px 0;
+  font-size: 0.95rem;
+}
+
+/* Form đăng tuyển */
+form input, form textarea {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 12px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+}
+
+form textarea {
+  height: 100px;
+  resize: vertical;
+}
+
+#postMsg {
+  margin-top: 10px;
+  color: green;
+  font-weight: 500;
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+  #keyword {
+    width: 100%;
+    margin-bottom: 10px;
+  }
+  main {
+    padding: 20px;
+  }
+}
